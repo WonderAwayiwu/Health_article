@@ -4,7 +4,7 @@ require_once 'simple_gnews.php';
 echo "<h1>Testing GNews API Integration</h1>";
 
 try {
-    $fetcher = new SimpleHealthArticleFetcher('0258543b51c4976984312a681e770c9f');
+    $fetcher = new SimpleHealthArticleFetcher('9f7017d1ceb3b6c5bf3e382756bd2426');
     
     echo "<h2>Testing Top Health Headlines:</h2>";
     $headlines = $fetcher->fetchTopHealthHeadlines(3);

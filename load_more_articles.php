@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])) {
     header('Content-Type: application/json');
     
     try {
-        $multiFetcher = new MultipleHealthArticleFetcher('0258543b51c4976984312a681e770c9f');
+        $multiFetcher = new MultipleHealthArticleFetcher('9f7017d1ceb3b6c5bf3e382756bd2426');
         
         switch ($_GET['action']) {
             case 'load_more':

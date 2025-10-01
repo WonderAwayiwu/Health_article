@@ -60,8 +60,19 @@ class SimpleGNews {
         $data = json_decode($response, true);
         
         if ($httpCode !== 200) {
-            $errorMsg = isset($data['errors']) ? $data['errors'][0] : 'Unknown API error';
+            $errorMsg = 'Unknown API error';
+            if (isset($data['errors']) && is_array($data['errors'])) {
+                $errorMsg = $data['errors'][0];
+            } elseif (isset($data['message'])) {
+                $errorMsg = $data['message'];
+            } elseif ($response) {
+                $errorMsg = $response;
+            }
             throw new Exception("API Error ($httpCode): " . $errorMsg);
+        }
+        
+        if (!$data || !isset($data['articles'])) {
+            throw new Exception("Invalid API response: " . ($response ?: 'Empty response'));
         }
         
         return $data;
@@ -214,7 +225,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])) {
     header('Content-Type: application/json');
     
     try {
-        $fetcher = new SimpleHealthArticleFetcher('0258543b51c4976984312a681e770c9f');
+        $fetcher = new SimpleHealthArticleFetcher('9f7017d1ceb3b6c5bf3e382756bd2426');
         
         switch ($_GET['action']) {
             case 'top_headlines':

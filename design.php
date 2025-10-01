@@ -12,7 +12,7 @@ require_once 'simple_gnews.php';
 
 // Initialize the article fetcher
 try {
-    $fetcher = new SimpleHealthArticleFetcher('9f7017d1ceb3b6c5bf3e382756bd2426');
+    $fetcher = new SimpleHealthArticleFetcher('0258543b51c4976984312a681e770c9f');
     $featuredArticles = $fetcher->fetchTopHealthHeadlines(30);
     $latestArticles = $fetcher->fetchHealthArticles('health wellness', 50);
 } catch (Exception $e) {
@@ -42,111 +42,143 @@ try {
         }
 
         /* Header */
- /* Header */
-.header {
-  background: linear-gradient(135deg, #16a34a, #10b981, #22d3ee);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 12px 0;
-}
+        .header {
+            background: linear-gradient(135deg, #1e40af, #3b82f6, #06b6d4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 10px 0;
+        }
 
-.nav-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-}
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+        }
 
-/* Logo */
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.logo-text {
-  font-size: 20px;
-  font-weight: 700;
-  color: white;
-}
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
 
-/* Nav Links */
-.nav-links {
-  display: flex;
-  gap: 28px;
-}
-.nav-link {
-  color: rgba(255, 255, 255, 0.9);
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s;
-  padding: 6px 12px;
-  border-radius: 8px;
-}
-.nav-link:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.15);
-}
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
 
-/* Search */
-.search-container {
-  position: relative;
-  width: 300px;
-}
-.search-input {
-  width: 100%;
-  padding: 10px 16px 10px 40px;
-  border: none;
-  border-radius: 25px;
-  background: rgba(255, 255, 255, 0.9);
-  font-size: 14px;
-  outline: none;
-}
-.search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #16a34a;
-}
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
 
-/* User */
-.user-section {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.username-display {
-  color: white;
-  font-size: 14px;
-  font-weight: 500;
-}
-.user-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: white;
-  color: #16a34a;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.logout-btn {
-  background: white;
-  color: #16a34a;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.3s;
-}
-.logout-btn:hover {
-  background: #f0fdf4;
-}
+        .nav-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
 
+        .search-container {
+            position: relative;
+            width: 320px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-input:focus {
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .username-display {
+            color: white;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .user-avatar:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
 
         /* Hero Section */
         .hero {
@@ -173,7 +205,7 @@ try {
         .hero-content {
             max-width: 800px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
             position: relative;
             z-index: 2;
         }
@@ -217,10 +249,12 @@ try {
         }
 
         .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 40px;
-            padding: 0 20px;
+            padding: 0 24px;
             text-align: center;
         }
 
@@ -251,7 +285,9 @@ try {
 
         /* Main Content */
         .main-content {
-            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 24px;
             display: grid;
             grid-template-columns: 1fr 300px;
             gap: 60px;
@@ -384,73 +420,40 @@ try {
 
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
         }
 
         .category-card {
             background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s;
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #e1e8ed;
+            transition: all 0.2s;
             cursor: pointer;
-            position: relative;
         }
 
         .category-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border-color: #1d4ed8;
+            transform: translateY(-2px);
         }
 
-        .category-image {
-            width: 100%;
-            height: 140px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-
-        .category-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(22, 163, 74, 0.8), rgba(16, 185, 129, 0.));
-            z-index: 1;
-        }
-
-        .category-content {
-            padding: 20px;
-            text-align: center;
+        .category-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            display: block;
         }
 
         .category-name {
-            font-size: 18px;
-            font-weight: 700;
+            font-weight: 600;
             color: #1a1a1a;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
         .category-count {
             color: #64748b;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .category-badge {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #16a34a;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-            z-index: 2;
+            font-size: 12px;
         }
 
         /* Articles Grid */
@@ -594,112 +597,53 @@ try {
 
         /* Newsletter */
         .newsletter {
-            background: url('view_all_comments_background.jpg') center/cover;
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
             color: white;
-            padding: 30px;
-            border-radius: 20px;
+            padding: 24px;
+            border-radius: 12px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .newsletter::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, rgba(64, 66, 65, 0.9), rgba(39, 43, 41, 0.8));
-            z-index: 1;
-        }
-        
-        .newsletter-content {
-            position: relative;
-            z-index: 2;
         }
 
         .newsletter h3 {
-            margin-bottom: 12px;
-            font-size: 24px;
-            font-weight: 800;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 8px;
         }
 
         .newsletter p {
-            font-size: 15px;
-            opacity: 0.95;
-            margin-bottom: 20px;
-            line-height: 1.5;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 16px;
         }
 
         .newsletter-input {
             width: 100%;
-            padding: 15px 18px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            margin-bottom: 15px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 12px;
             outline: none;
-            background: rgba(255, 255, 255, 0.95);
-            font-size: 14px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-        
-        .newsletter-input:focus {
-            border-color: white;
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
-            background: white;
-        }
-        
-        .newsletter-input::placeholder {
-            color: #6b7280;
         }
 
         .newsletter-btn {
             width: 100%;
             background: white;
-            color: #16a34a;
+            color: #1d4ed8;
             border: none;
-            padding: 15px 20px;
-            border-radius: 15px;
-            font-weight: 700;
-            font-size: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-        
-        .newsletter-btn:hover {
-            background: #f0fdf4;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
 
         /* About Section */
-        .about {
-            background: url('about_banner.jpg') no-repeat center center/cover;
+        /* .about {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
             padding: 80px 0;
-            position: relative;
-        }
-
-        .about::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 1;
         }
 
         .about-container {
-            position: relative;
-            z-index: 2;
-        }
-
-        .about-container {
-            padding: 0 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
 
         .about-header {
@@ -710,17 +654,15 @@ try {
         .about-title {
             font-size: 48px;
             font-weight: 800;
-            color: white;
+            color: #1a1a1a;
             margin-bottom: 16px;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
         }
 
         .about-subtitle {
             font-size: 20px;
-            color: rgba(255, 255, 255, 0.9);
+            color: #64748b;
             max-width: 600px;
             margin: 0 auto;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
         }
 
         .about-content {
@@ -734,26 +676,22 @@ try {
         .about-text {
             font-size: 16px;
             line-height: 1.8;
-            color: white;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+            color: #374151;
         }
 
         .about-text h3 {
-            font-size: 32px;
-            font-weight: 800;
-            color: white;
-            margin-bottom: 24px;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 16px;
         }
 
         .about-text p {
             margin-bottom: 20px;
-            font-size: 18px;
-            font-weight: 500;
         }
 
         .about-image {
-            /* background: linear-gradient(135deg, #1d4ed8, #3b82f6); */
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
             border-radius: 16px;
             height: 400px;
             display: flex;
@@ -765,7 +703,7 @@ try {
 
         .mission-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-bottom: 60px;
         }
@@ -784,18 +722,9 @@ try {
         }
 
         .mission-icon {
-            width: 100%;
-            height: 120px;
+            font-size: 48px;
             margin-bottom: 20px;
-            border-radius: 12px;
-            overflow: hidden;
             display: block;
-        }
-
-        .mission-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         .mission-card h4 {
@@ -840,8 +769,8 @@ try {
         }
 
         .team-avatar {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             background: linear-gradient(135deg, #1d4ed8, #3b82f6);
             margin: 0 auto 20px;
@@ -870,140 +799,7 @@ try {
             color: #64748b;
             font-size: 14px;
             line-height: 1.5;
-        }
-
-        /* Footer */
-        .footer {
-            background: linear-gradient(135deg, #1e293b, #334155);
-            color: white;
-            padding: 60px 0 20px;
-            margin-top: 80px;
-        }
-
-        .footer-container {
-            padding: 0 20px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-brand {
-            max-width: 300px;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .footer-logo img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-        }
-
-        .footer-brand-name {
-            font-size: 24px;
-            font-weight: 700;
-            color: white;
-        }
-
-        .footer-description {
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 12px;
-        }
-
-        .social-link {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .social-link:hover {
-            background: #16a34a;
-            transform: translateY(-2px);
-        }
-
-        .footer-section h4 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: white;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: #16a34a;
-        }
-
-        .footer-contact p {
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .footer-copyright {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .footer-legal {
-            display: flex;
-            gap: 20px;
-        }
-
-        .footer-legal a {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .footer-legal a:hover {
-            color: #16a34a;
-        }
+        } */
 
         /* Loading */
         .loading {
@@ -1038,14 +834,13 @@ try {
     <header class="header">
         <div class="nav-container">
             <div class="logo">
-                <img src="logo.jpg" alt="" width="60" style="border-radius: 50%;">
+                <img src="hewale.jpg" alt="" width="60" style="border-radius: 50%;">
             </div>
             <nav class="nav-links">
                 <a href="#articles" class="nav-link">Articles</a>
                 <a href="#categories" class="nav-link">Categories</a>
                 <a href="#experts" class="nav-link">Experts</a>
                 <a href="#about" class="nav-link">About</a>
-                <a href="view_all_comments.php" class="nav-link">Comments</a>
             </nav>
             <div class="search-container">
                 <span class="search-icon">🔍</span>
@@ -1074,25 +869,21 @@ try {
     <!-- Stats Section -->
     <section class="stats">
         <div class="stats-container">
-            <div class="stat-item" onclick="scrollToSection('#articles')" style="background: url('health1.jpg') center/cover; position: relative;">
-                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.6); border-radius: 20px;"></div>
-                <span class="stat-number" style="position: relative; z-index: 2;">10K+</span>
-                <span class="stat-label" style="position: relative; z-index: 2; font-size: 18px; font-weight: 800; color: #1a1a1a; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Health Articles</span>
+            <div class="stat-item" onclick="scrollToSection('#articles')">
+                <span class="stat-number">10K+</span>
+                <span class="stat-label">Health Articles</span>
             </div>
-            <div class="stat-item" onclick="loadCategoryArticles('medicine')" style="background: url('doc1.jpg') center/cover; position: relative;">
-                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.6); border-radius: 20px;"></div>
-                <span class="stat-number" style="position: relative; z-index: 2;">500+</span>
-                <span class="stat-label" style="position: relative; z-index: 2; font-size: 18px; font-weight: 800; color: #1a1a1a; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Medical Experts</span>
+            <div class="stat-item" onclick="loadCategoryArticles('medicine')">
+                <span class="stat-number">500+</span>
+                <span class="stat-label">Medical Experts</span>
             </div>
-            <div class="stat-item" onclick="scrollToSection('#categories')" style="background: url('health2.jpg') center/cover; position: relative;">
-                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.6); border-radius: 20px;"></div>
-                <span class="stat-number" style="position: relative; z-index: 2;">1M+</span>
-                <span class="stat-label" style="position: relative; z-index: 2; font-size: 18px; font-weight: 800; color: #1a1a1a; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Monthly Readers</span>
+            <div class="stat-item" onclick="scrollToSection('#categories')">
+                <span class="stat-number">1M+</span>
+                <span class="stat-label">Monthly Readers</span>
             </div>
-            <div class="stat-item" onclick="scrollToSection('#categories')" style="background: url('nutrition.jpg') center/cover; position: relative;">
-                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.6); border-radius: 20px;"></div>
-                <span class="stat-number" style="position: relative; z-index: 2;">50+</span>
-                <span class="stat-label" style="position: relative; z-index: 2; font-size: 18px; font-weight: 800; color: #1a1a1a; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Health Topics</span>
+            <div class="stat-item" onclick="scrollToSection('#categories')">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Health Topics</span>
             </div>
         </div>
     </section>
@@ -1135,60 +926,39 @@ try {
                 <h2 class="section-title">Browse by Category</h2>
                 <div class="category-grid">
                     <div class="category-card" data-category="all">
-                        <div class="category-image" style="background-image: url('all_categories.jpg')"></div>
-                        <div class="category-badge">Popular</div>
-                        <div class="category-content">
-                            <div class="category-name">All Categories</div>
-                            <div class="category-count">View all articles</div>
-                        </div>
+                        <span class="category-icon">🏥</span>
+                        <div class="category-name">All Categories</div>
+                        <div class="category-count">View all articles</div>
                     </div>
                     <div class="category-card" data-category="heart">
-                        <div class="category-image" style="background-image: url('heart.jpg')"></div>
-                        <div class="category-badge">New</div>
-                        <div class="category-content">
-                            <div class="category-name">Heart Health</div>
-                            <div class="category-count">Latest articles</div>
-                        </div>
+                        <span class="category-icon">❤️</span>
+                        <div class="category-name">Heart Health</div>
+                        <div class="category-count">Latest articles</div>
                     </div>
                     <div class="category-card" data-category="nutrition">
-                        <div class="category-image" style="background-image: url('nutrition.jpg')"></div>
-                        <div class="category-badge">Trending</div>
-                        <div class="category-content">
-                            <div class="category-name">Nutrition</div>
-                            <div class="category-count">Latest articles</div>
-                        </div>
+                        <span class="category-icon">🥗</span>
+                        <div class="category-name">Nutrition</div>
+                        <div class="category-count">Latest articles</div>
                     </div>
                     <div class="category-card" data-category="fitness">
-                        <div class="category-image" style="background-image: url('fitness.jpg')"></div>
-                        <div class="category-badge">Hot</div>
-                        <div class="category-content">
-                            <div class="category-name">Fitness</div>
-                            <div class="category-count">Latest articles</div>
-                        </div>
+                        <span class="category-icon">🏃</span>
+                        <div class="category-name">Fitness</div>
+                        <div class="category-count">Latest articles</div>
                     </div>
                     <div class="category-card" data-category="mental">
-                        <div class="category-image" style="background-image: url('mental.jpg')"></div>
-                        <div class="category-badge">Featured</div>
-                        <div class="category-content">
-                            <div class="category-name">Mental Health</div>
-                            <div class="category-count">Latest articles</div>
-                        </div>
+                        <span class="category-icon">🧠</span>
+                        <div class="category-name">Mental Health</div>
+                        <div class="category-count">Latest articles</div>
                     </div>
                     <div class="category-card" data-category="medicine">
-                        <div class="category-image" style="background-image: url('medicine.jpg')"></div>
-                        <div class="category-badge">Updated</div>
-                        <div class="category-content">
-                            <div class="category-name">Medicine</div>
-                            <div class="category-count">Latest articles</div>
-                        </div>
+                        <span class="category-icon">💊</span>
+                        <div class="category-name">Medicine</div>
+                        <div class="category-count">Latest articles</div>
                     </div>
                     <div class="category-card" data-category="prevention">
-                        <div class="category-image" style="background-image: url('prevention.jpg')"></div>
-                        <div class="category-badge">Essential</div>
-                        <div class="category-content">
-                            <div class="category-name">Prevention</div>
-                            <div class="category-count">Latest articles</div>
-                        </div>
+                        <span class="category-icon">🛡️</span>
+                        <div class="category-name">Prevention</div>
+                        <div class="category-count">Latest articles</div>
                     </div>
                 </div>
             </section>
@@ -1199,7 +969,7 @@ try {
                 <div class="articles-grid" id="articlesGrid">
                     <?php if (!empty($latestArticles)): ?>
                         <?php foreach ($latestArticles as $article): ?>
-                            <article class="article-card">
+                            <article class="article-card" onclick="openArticle('<?php echo htmlspecialchars($article['url']); ?>')">
                                 <div class="article-image" style="background-image: url('<?php echo $article['image'] ?: 'health_image_fallback.jpg'; ?>')"></div>
                                 <div class="article-content">
                                     <span class="article-category">Health</span>
@@ -1210,10 +980,6 @@ try {
                                         <div class="article-stats">
                                             <span><?php echo $article['timeAgo']; ?></span>
                                         </div>
-                                    </div>
-                                    <div style="margin-top: 15px; display: flex; gap: 10px;">
-                                        <button onclick="openArticle('<?php echo htmlspecialchars($article['url']); ?>')" style="background: #1d4ed8; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">Read Article</button>
-                                        <button onclick="viewWithComments('<?php echo htmlspecialchars($article['url']); ?>', '<?php echo urlencode($article['title']); ?>')" style="background: #16a34a; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">View & Comment</button>
                                     </div>
                                 </div>
                             </article>
@@ -1238,18 +1004,16 @@ try {
             </div>
 
             <div class="newsletter">
-                <div class="newsletter-content">
-                    <h3>Stay Updated</h3>
-                    <p>Get the latest health insights delivered to your inbox</p>
-                    <input type="email" class="newsletter-input" placeholder="📧 Enter your email address">
-                    <button class="newsletter-btn">Subscribe Now</button>
-                </div>
+                <h3>Stay Updated</h3>
+                <p>Get the latest health insights delivered to your inbox</p>
+                <input type="email" class="newsletter-input" placeholder="Enter your email">
+                <button class="newsletter-btn">Subscribe</button>
             </div>
         </aside>
     </div>
 
     <!-- About Section -->
-    <section class="about" id="about">
+    <!-- <section class="about" id="about">
         <div class="about-container">
             <div class="about-header">
                 <h2 class="about-title">About HealthHub</h2>
@@ -1270,32 +1034,19 @@ try {
 
             <div class="mission-grid">
                 <div class="mission-card">
-                    <div class="mission-icon">
-                        <img src="about1.jpg" alt="Evidence-Based Content">
-                    </div>
+                    <span class="mission-icon">🎯</span>
                     <h4>Evidence-Based Content</h4>
                     <p>All our articles are sourced from peer-reviewed medical journals and verified by healthcare professionals to ensure accuracy and reliability.</p>
                 </div>
                 <div class="mission-card">
-                    <div class="mission-icon">
-                        <img src="about2.jpg" alt="Global Health Perspective">
-                    </div>
+                    <span class="mission-icon">🌍</span>
                     <h4>Global Health Perspective</h4>
                     <p>We bring you health insights from medical experts worldwide, covering diverse health topics and cultural approaches to wellness.</p>
                 </div>
                 <div class="mission-card">
-                    <div class="mission-icon">
-                        <img src="about3.jpg" alt="Easy to Understand">
-                    </div>
+                    <span class="mission-icon">💡</span>
                     <h4>Easy to Understand</h4>
                     <p>Complex medical information simplified into clear, actionable insights that help you make informed health decisions.</p>
-                </div>
-                <div class="mission-card">
-                    <div class="mission-icon">
-                        <img src="health1.jpg" alt="24/7 Support">
-                    </div>
-                    <h4>24/7 Support</h4>
-                    <p>Round-the-clock access to health resources and expert guidance whenever you need reliable medical information.</p>
                 </div>
             </div>
 
@@ -1303,25 +1054,25 @@ try {
                 <h3 class="team-title">Our Expert Team</h3>
                 <div class="team-grid">
                     <div class="team-member">
-                        <div class="team-avatar"><img src="doc1.jpg" alt="" width="100px" height="100px" style="border-radius: 50%;"></div>
+                        <div class="team-avatar">DR</div>
                         <div class="team-name">Dr. Sarah Johnson</div>
                         <div class="team-role">Chief Medical Officer</div>
                         <div class="team-bio">Board-certified physician with 15+ years in preventive medicine and public health advocacy.</div>
                     </div>
                     <div class="team-member">
-                        <div class="team-avatar"><img src="doc2.jpg" alt="" width="100px" height="100px" style="border-radius: 50%;"></div>
+                        <div class="team-avatar">MK</div>
                         <div class="team-name">Dr. Michael Kim</div>
                         <div class="team-role">Cardiology Specialist</div>
                         <div class="team-bio">Leading cardiologist specializing in heart health research and cardiovascular disease prevention.</div>
                     </div>
                     <div class="team-member">
-                        <div class="team-avatar"><img src="doc3.jpg" alt="" width="100px" height="100px" style="border-radius: 50%;"></div>
+                        <div class="team-avatar">EP</div>
                         <div class="team-name">Dr. Emily Parker</div>
                         <div class="team-role">Nutrition Expert</div>
                         <div class="team-bio">Registered dietitian and nutrition scientist focused on evidence-based dietary recommendations.</div>
                     </div>
                     <div class="team-member">
-                        <div class="team-avatar"><img src="doc4.jpg" alt="" width="100px" height="100px" style="border-radius: 50%;"></div>
+                        <div class="team-avatar">JL</div>
                         <div class="team-name">Dr. James Liu</div>
                         <div class="team-role">Mental Health Specialist</div>
                         <div class="team-bio">Licensed psychiatrist dedicated to mental health awareness and psychological wellness education.</div>
@@ -1329,109 +1080,13 @@ try {
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="footer-logo">
-                        <img src="hewale.jpg" alt="HealthHub Logo">
-                        <span class="footer-brand-name">HealthHub</span>
-                    </div>
-                    <p class="footer-description">
-                        Your trusted source for evidence-based health information. We bridge the gap between complex medical research and everyday health decisions.
-                    </p>
-                    <div class="footer-social">
-                        <a href="#" class="social-link">
-                            <img src="facebook.jpg" alt="Facebook" style="width: 24px; height: 24px; border-radius: 4px;">
-                        </a>
-                        <a href="#" class="social-link">
-                            <img src="x.png" alt="X (Twitter)" style="width: 24px; height: 24px; border-radius: 4px;">
-                        </a>
-                        <a href="#" class="social-link">
-                            <img src="instagram.jpg" alt="Instagram" style="width: 24px; height: 24px; border-radius: 4px;">
-                        </a>
-                        <a href="#" class="social-link">
-                            <img src="youtube.png" alt="YouTube" style="width: 24px; height: 24px; border-radius: 4px;">
-                        </a>
-                        <a href="#" class="social-link">
-                            <img src="whatsapp.png" alt="WhatsApp" style="width: 24px; height: 24px; border-radius: 4px;">
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="#articles">Articles</a></li>
-                        <li><a href="#categories">Categories</a></li>
-                        <li><a href="#experts">Our Experts</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#">Health Tips</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h4>Health Topics</h4>
-                    <ul class="footer-links">
-                        <li><a href="#" onclick="loadCategoryArticles('heart')">Heart Health</a></li>
-                        <li><a href="#" onclick="loadCategoryArticles('nutrition')">Nutrition</a></li>
-                        <li><a href="#" onclick="loadCategoryArticles('fitness')">Fitness</a></li>
-                        <li><a href="#" onclick="loadCategoryArticles('mental')">Mental Health</a></li>
-                        <li><a href="#" onclick="loadCategoryArticles('prevention')">Prevention</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h4>Contact Info</h4>
-                    <div class="footer-contact">
-                        <p>
-                            <img src="gmail.png" alt="Email" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;">
-                            info@healthhub.com
-                        </p>
-                        <p>
-                            <img src="call.png" alt="Phone" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;">
-                            +1 (555) 123-4567
-                        </p>
-                        <p>
-                            <img src="location.png" alt="Location" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;">
-                            123 Health Street<br>Medical District, NY 10001
-                        </p>
-                        <p>
-                            <img src="time_clock.jpg" alt="Support" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle; border-radius: 3px;">
-                            24/7 Support Available
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <div class="footer-copyright">
-                    © <?php echo date('Y'); ?> HealthHub. All rights reserved.
-                </div>
-                <div class="footer-legal">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Medical Disclaimer</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    </section> -->
 
     <script>
         // Open article in new tab
         function openArticle(url) {
             if (url) {
                 window.open(url, '_blank');
-            }
-        }
-
-        // View article with comments
-        function viewWithComments(url, title) {
-            if (url && title) {
-                window.open(`article_view.php?url=${encodeURIComponent(url)}&title=${title}`, '_blank');
             }
         }
 
@@ -1539,7 +1194,7 @@ try {
         function displayArticles(articles) {
             const articlesGrid = document.getElementById('articlesGrid');
             articlesGrid.innerHTML = articles.map(article => `
-                <article class="article-card">
+                <article class="article-card" onclick="openArticle('${article.url}')">
                     <div class="article-image" style="background-image: url('${article.image || './health_image_fallback.jpg'}'); background-size: cover; background-position: center;"></div>
                     <div class="article-content">
                         <span class="article-category">Health</span>
@@ -1550,10 +1205,6 @@ try {
                             <div class="article-stats">
                                 <span>${article.timeAgo}</span>
                             </div>
-                        </div>
-                        <div style="margin-top: 15px; display: flex; gap: 10px;">
-                            <button onclick="openArticle('${article.url}')" style="background: #1d4ed8; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">Read Article</button>
-                            <button onclick="viewWithComments('${article.url}', '${encodeURIComponent(article.title)}')" style="background: #16a34a; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">View & Comment</button>
                         </div>
                     </div>
                 </article>
@@ -1637,7 +1288,7 @@ try {
                         
                         if (newArticles.length > 0) {
                             const newArticlesHtml = newArticles.map(article => `
-                                <article class="article-card">
+                                <article class="article-card" onclick="openArticle('${article.url}')">
                                     <div class="article-image" style="background-image: url('${article.image || './health_image_fallback.jpg'}'); background-size: cover; background-position: center;"></div>
                                     <div class="article-content">
                                         <span class="article-category">Health</span>
@@ -1648,10 +1299,6 @@ try {
                                             <div class="article-stats">
                                                 <span>${article.timeAgo}</span>
                                             </div>
-                                        </div>
-                                        <div style="margin-top: 15px; display: flex; gap: 10px;">
-                                            <button onclick="openArticle('${article.url}')" style="background: #1d4ed8; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">Read Article</button>
-                                            <button onclick="viewWithComments('${article.url}', '${encodeURIComponent(article.title)}')" style="background: #16a34a; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">View & Comment</button>
                                         </div>
                                     </div>
                                 </article>

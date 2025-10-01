@@ -1,5 +1,5 @@
 <?php 
-
+session_start();
 include('config.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['password'])) {
             $login_success = true;
+            $_SESSION['username'] = $user['username'];
         } else {
             $error_message = 'Invalid password!';
         }
@@ -248,7 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             icon: 'success',
             confirmButtonText: 'OK'
         }).then(() => {
-            window.location.href = 'watchpage.php';
+            window.location.href = 'index.php';
         });
     </script>
     <?php elseif (isset($error_message) && !empty($error_message)): ?>

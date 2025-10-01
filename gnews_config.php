@@ -1,6 +1,6 @@
 <?php
 // GNews API Configuration
-define('GNEWS_API_KEY', '0258543b51c4976984312a681e770c9f');
+define('GNEWS_API_KEY', '9f7017d1ceb3b6c5bf3e382756bd2426');
 define('GNEWS_BASE_URL', 'https://gnews.io/api/v4/');
 
 // Include the GNews library files
