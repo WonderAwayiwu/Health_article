@@ -834,7 +834,7 @@ try {
     <header class="header">
         <div class="nav-container">
             <div class="logo">
-                <img src="hewale.jpg" alt="" width="60" style="border-radius: 50%;">
+                <img src="images/hewale.jpg" alt="" width="60" style="border-radius: 50%;">
             </div>
             <nav class="nav-links">
                 <a href="#articles" class="nav-link">Articles</a>

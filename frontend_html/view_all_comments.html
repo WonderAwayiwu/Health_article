@@ -1,19 +1,3 @@
-<?php
-session_start();
-require_once 'config.php';
-
-// Check if user is logged in
-if (!isset($_SESSION['username'])) {
-    header('Location: login.php');
-    exit();
-}
-
-// Fetch all comments
-$stmt = $sql->prepare("SELECT * FROM comments ORDER BY created_at DESC");
-$stmt->execute();
-$result = $stmt->get_result();
-$comments = $result->fetch_all(MYSQLI_ASSOC);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +9,7 @@ $comments = $result->fetch_all(MYSQLI_ASSOC);
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: url('images/view_all_comments_background.jpg') center/cover fixed;
+            background: url('../images/view_all_comments_background.jpg') center/cover fixed;
             min-height: 100vh;
             position: relative;
         }
@@ -34,7 +18,7 @@ $comments = $result->fetch_all(MYSQLI_ASSOC);
             content: '';
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            /* background: linear-gradient(135deg, rgba(22, 163, 74, 0.9), rgba(16, 185, 129, 0.8)); */
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
             z-index: -1;
         }
         
@@ -274,7 +258,7 @@ $comments = $result->fetch_all(MYSQLI_ASSOC);
     <div class="container">
         <div class="header">
             <h1 class="title">All Comments</h1>
-            <a href="index.php" class="back-btn">
+            <a href="index.html" class="back-btn">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
                 </svg>
@@ -284,15 +268,15 @@ $comments = $result->fetch_all(MYSQLI_ASSOC);
         
         <div class="stats">
             <div class="stat-card">
-                <div class="stat-number"><?php echo count($comments); ?></div>
+                <div class="stat-number">25</div>
                 <div class="stat-label">Total Comments</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number"><?php echo count(array_unique(array_column($comments, 'article_url'))); ?></div>
+                <div class="stat-number">12</div>
                 <div class="stat-label">Articles with Comments</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number"><?php echo count(array_unique(array_column($comments, 'user_email'))); ?></div>
+                <div class="stat-number">18</div>
                 <div class="stat-label">Unique Users</div>
             </div>
         </div>
@@ -302,31 +286,125 @@ $comments = $result->fetch_all(MYSQLI_ASSOC);
         </div>
         
         <div class="comments-container" id="commentsContainer">
-            <?php if (!empty($comments)): ?>
-                <?php foreach ($comments as $comment): ?>
-                    <div class="comment" data-search="<?php echo strtolower($comment['user_name'] . ' ' . $comment['article_title'] . ' ' . $comment['comment_text']); ?>">
-                        <div class="comment-header">
-                            <div class="comment-user-info">
-                                <div class="user-avatar"><?php echo strtoupper(substr($comment['user_name'], 0, 1)); ?></div>
-                                <div>
-                                    <div class="comment-user"><?php echo htmlspecialchars($comment['user_name']); ?></div>
-                                    <div class="comment-article"><?php echo htmlspecialchars($comment['article_title']); ?></div>
-                                </div>
-                            </div>
-                            <div class="comment-date"><?php echo date('M j, Y', strtotime($comment['created_at'])); ?></div>
+            <div class="comment" data-search="john doe heart health prevention great article very informative">
+                <div class="comment-header">
+                    <div class="comment-user-info">
+                        <div class="user-avatar">J</div>
+                        <div>
+                            <div class="comment-user">John Doe</div>
+                            <div class="comment-article">Heart Health Prevention Tips</div>
                         </div>
-                        <div class="comment-text"><?php echo nl2br(htmlspecialchars($comment['comment_text'])); ?></div>
-                        <a href="<?php echo htmlspecialchars($comment['article_url']); ?>" class="article-link">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
-                            </svg>
-                            View Article
-                        </a>
                     </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <div class="no-comments">No comments found.</div>
-            <?php endif; ?>
+                    <div class="comment-date">Dec 15, 2024</div>
+                </div>
+                <div class="comment-text">Great article! Very informative and helpful for understanding heart health. I've learned a lot about prevention strategies.</div>
+                <a href="#" class="article-link">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
+                    </svg>
+                    View Article
+                </a>
+            </div>
+            
+            <div class="comment" data-search="sarah smith nutrition diet healthy eating excellent insights">
+                <div class="comment-header">
+                    <div class="comment-user-info">
+                        <div class="user-avatar">S</div>
+                        <div>
+                            <div class="comment-user">Sarah Smith</div>
+                            <div class="comment-article">Nutrition and Diet Guidelines</div>
+                        </div>
+                    </div>
+                    <div class="comment-date">Dec 14, 2024</div>
+                </div>
+                <div class="comment-text">Excellent insights on healthy eating! The practical tips are easy to follow and implement in daily life.</div>
+                <a href="#" class="article-link">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
+                    </svg>
+                    View Article
+                </a>
+            </div>
+            
+            <div class="comment" data-search="mike johnson fitness exercise workout amazing content">
+                <div class="comment-header">
+                    <div class="comment-user-info">
+                        <div class="user-avatar">M</div>
+                        <div>
+                            <div class="comment-user">Mike Johnson</div>
+                            <div class="comment-article">Fitness and Exercise Benefits</div>
+                        </div>
+                    </div>
+                    <div class="comment-date">Dec 13, 2024</div>
+                </div>
+                <div class="comment-text">Amazing content on fitness! The exercise routines mentioned are perfect for beginners like me.</div>
+                <a href="#" class="article-link">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
+                    </svg>
+                    View Article
+                </a>
+            </div>
+            
+            <div class="comment" data-search="emily davis mental health wellness helpful information">
+                <div class="comment-header">
+                    <div class="comment-user-info">
+                        <div class="user-avatar">E</div>
+                        <div>
+                            <div class="comment-user">Emily Davis</div>
+                            <div class="comment-article">Mental Health and Wellness</div>
+                        </div>
+                    </div>
+                    <div class="comment-date">Dec 12, 2024</div>
+                </div>
+                <div class="comment-text">Very helpful information about mental health. The strategies for managing stress are particularly useful.</div>
+                <a href="#" class="article-link">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
+                    </svg>
+                    View Article
+                </a>
+            </div>
+            
+            <div class="comment" data-search="alex brown medicine healthcare informative article">
+                <div class="comment-header">
+                    <div class="comment-user-info">
+                        <div class="user-avatar">A</div>
+                        <div>
+                            <div class="comment-user">Alex Brown</div>
+                            <div class="comment-article">Latest Medical Research</div>
+                        </div>
+                    </div>
+                    <div class="comment-date">Dec 11, 2024</div>
+                </div>
+                <div class="comment-text">Informative article about the latest medical research. It's great to stay updated with healthcare advancements.</div>
+                <a href="#" class="article-link">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
+                    </svg>
+                    View Article
+                </a>
+            </div>
+            
+            <div class="comment" data-search="lisa wilson prevention disease excellent resource">
+                <div class="comment-header">
+                    <div class="comment-user-info">
+                        <div class="user-avatar">L</div>
+                        <div>
+                            <div class="comment-user">Lisa Wilson</div>
+                            <div class="comment-article">Disease Prevention Strategies</div>
+                        </div>
+                    </div>
+                    <div class="comment-date">Dec 10, 2024</div>
+                </div>
+                <div class="comment-text">Excellent resource for disease prevention! The preventive measures are clearly explained and easy to understand.</div>
+                <a href="#" class="article-link">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
+                    </svg>
+                    View Article
+                </a>
+            </div>
         </div>
     </div>
 
@@ -356,7 +434,7 @@ $comments = $result->fetch_all(MYSQLI_ASSOC);
                 
                 const articleLink = this.querySelector('.article-link');
                 if (articleLink) {
-                    window.location.href = articleLink.href;
+                    window.location.href = 'article_view.html';
                 }
             });
         });

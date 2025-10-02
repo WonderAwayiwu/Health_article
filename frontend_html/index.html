@@ -1,26 +1,3 @@
-<?php
-session_start();
-include('config.php');
-
-// Check if user is logged in
-if (!isset($_SESSION['username'])) {
-    header('Location: login.php');
-    exit();
-}
-
-require_once 'simple_gnews.php';
-
-// Initialize the article fetcher
-try {
-    $fetcher = new SimpleHealthArticleFetcher('9f7017d1ceb3b6c5bf3e382756bd2426');
-    $featuredArticles = $fetcher->fetchTopHealthHeadlines(30);
-    $latestArticles = $fetcher->fetchHealthArticles('health wellness', 50);
-} catch (Exception $e) {
-    $featuredArticles = [];
-    $latestArticles = [];
-    error_log("Error loading articles: " . $e->getMessage());
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -165,46 +142,10 @@ try {
             height: 100%;
             opacity: 0.6;
             transition: opacity 0.3s ease;
-            /* filter: brightness(0) saturate(100%) invert(45%) sepia(8%) saturate(1037%) hue-rotate(202deg) brightness(95%) contrast(92%); */
         }
         
         .search-icon:hover img {
             opacity: 0.8;
-            /* filter: brightness(0) saturate(100%) invert(42%) sepia(93%) saturate(1352%) hue-rotate(204deg) brightness(99%) contrast(107%); */
-        }
-
-        .search-suggestions {
-            position: absolute;
-            top: calc(100% + 8px);
-            left: 0;
-            right: 0;
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            z-index: 1000;
-            display: none;
-            max-height: 280px;
-            overflow-y: auto;
-        }
-        
-        .search-suggestion {
-            padding: 14px 20px;
-            cursor: pointer;
-            border-bottom: 1px solid #f1f5f9;
-            transition: all 0.2s ease;
-            font-size: 15px;
-            font-weight: 500;
-            color: #334155;
-        }
-        
-        .search-suggestion:hover {
-            background: #f8fafc;
-            color: #1e293b;
-        }
-        
-        .search-suggestion:last-child {
-            border-bottom: none;
         }
 
         /* User Section */
@@ -260,10 +201,9 @@ try {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-
         /* Hero Section */
         .hero {
-            background: url('images/hero.jpg');
+            background: url('../images/hero.jpg');
             background-size: cover;
             background-position: center;
             color: white;
@@ -532,7 +472,7 @@ try {
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(22, 163, 74, 0.8), rgba(16, 185, 129, 0.));
+            background: linear-gradient(135deg, rgba(22, 163, 74, 0.8), rgba(16, 185, 129, 0.6));
             z-index: 1;
         }
 
@@ -708,7 +648,7 @@ try {
 
         /* Newsletter */
         .newsletter {
-            background: url('images/view_all_comments_background.jpg') center/cover;
+            background: url('../images/view_all_comments_background.jpg') center/cover;
             color: white;
             padding: 30px;
             border-radius: 20px;
@@ -791,7 +731,7 @@ try {
 
         /* About Section */
         .about {
-            background: url('images/about_banner.jpg') no-repeat center center/cover;
+            background: url('../images/about_banner.jpg') no-repeat center center/cover;
             padding: 80px 0;
             position: relative;
         }
@@ -810,9 +750,6 @@ try {
         .about-container {
             position: relative;
             z-index: 2;
-        }
-
-        .about-container {
             padding: 0 20px;
         }
 
@@ -867,7 +804,6 @@ try {
         }
 
         .about-image {
-            /* background: linear-gradient(135deg, #1d4ed8, #3b82f6); */
             border-radius: 16px;
             height: 400px;
             display: flex;
@@ -1152,26 +1088,25 @@ try {
     <header class="header">
         <div class="nav-container">
             <div class="logo">
-                <img src="images/logo.jpg" alt="" width="60" style="border-radius: 50%;">
+                <img src="../images/logo.jpg" alt="" width="60" style="border-radius: 50%;">
             </div>
             <nav class="nav-links">
                 <a href="#articles" class="nav-link">Articles</a>
                 <a href="#categories" class="nav-link">Categories</a>
                 <a href="#experts" class="nav-link">Experts</a>
                 <a href="#about" class="nav-link">About</a>
-                <a href="view_all_comments.php" class="nav-link">Comments</a>
+                <a href="view_all_comments.html" class="nav-link">Comments</a>
             </nav>
             <div class="search-container">
                 <div class="search-icon">
-                    <img src="images/search.png" alt="">
+                    <img src="../images/search.png" alt="">
                 </div>
                 <input type="text" class="search-input" placeholder="Search health articles, conditions, treatments..." id="searchInput">
-                <div class="search-suggestions" id="searchSuggestions"></div>
             </div>
             <div class="user-section">
-                <span class="username-display">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
-                <div class="user-avatar"><?php echo strtoupper(substr($_SESSION['username'], 0, 2)); ?></div>
-                <a href="logout.php" class="logout-btn">Logout</a>
+                <span class="username-display">Welcome, User</span>
+                <div class="user-avatar">US</div>
+                <a href="login.html" class="logout-btn">Logout</a>
             </div>
         </div>
     </header>
@@ -1191,22 +1126,22 @@ try {
     <!-- Stats Section -->
     <section class="stats">
         <div class="stats-container">
-            <div class="stat-item" onclick="scrollToSection('#articles')" style="background: url('images/health1.jpg') center/cover; position: relative;">
+            <div class="stat-item" style="background: url('../images/health1.jpg') center/cover; position: relative;">
                 <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.6); border-radius: 20px;"></div>
                 <span class="stat-number" style="position: relative; z-index: 2;">10K+</span>
                 <span class="stat-label" style="position: relative; z-index: 2; font-size: 18px; font-weight: 800; color: #1a1a1a; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Health Articles</span>
             </div>
-            <div class="stat-item" onclick="loadCategoryArticles('medicine')" style="background: url('images/doc1.jpg') center/cover; position: relative;">
+            <div class="stat-item" style="background: url('../images/doc1.jpg') center/cover; position: relative;">
                 <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.6); border-radius: 20px;"></div>
                 <span class="stat-number" style="position: relative; z-index: 2;">500+</span>
                 <span class="stat-label" style="position: relative; z-index: 2; font-size: 18px; font-weight: 800; color: #1a1a1a; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Medical Experts</span>
             </div>
-            <div class="stat-item" onclick="scrollToSection('#categories')" style="background: url('images/health2.jpg') center/cover; position: relative;">
+            <div class="stat-item" style="background: url('../images/health2.jpg') center/cover; position: relative;">
                 <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.6); border-radius: 20px;"></div>
                 <span class="stat-number" style="position: relative; z-index: 2;">1M+</span>
                 <span class="stat-label" style="position: relative; z-index: 2; font-size: 18px; font-weight: 800; color: #1a1a1a; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Monthly Readers</span>
             </div>
-            <div class="stat-item" onclick="scrollToSection('#categories')" style="background: url('images/nutrition.jpg') center/cover; position: relative;">
+            <div class="stat-item" style="background: url('../images/nutrition.jpg') center/cover; position: relative;">
                 <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.6); border-radius: 20px;"></div>
                 <span class="stat-number" style="position: relative; z-index: 2;">50+</span>
                 <span class="stat-label" style="position: relative; z-index: 2; font-size: 18px; font-weight: 800; color: #1a1a1a; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Health Topics</span>
@@ -1220,87 +1155,80 @@ try {
             <!-- Featured Article -->
             <section class="featured-section">
                 <h2 class="section-title">Featured Article</h2>
-                <div id="featuredArticle">
-                    <?php if (!empty($featuredArticles)): ?>
-                        <?php $featured = $featuredArticles[0]; ?>
-                        <article class="featured-article" onclick="openArticle('<?php echo htmlspecialchars($featured['url']); ?>')">
-                            <div class="featured-image" style="background-image: url('<?php echo $featured['image'] ?: 'images/health_image_fallback.jpg'; ?>')"></div>
-                            <div class="featured-content">
-                                <span class="featured-badge">Health News</span>
-                                <h3 class="featured-title"><?php echo htmlspecialchars($featured['title']); ?></h3>
-                                <p class="featured-excerpt"><?php echo htmlspecialchars(substr($featured['description'] ?: '', 0, 200)) . '...'; ?></p>
-                                <div class="featured-meta">
-                                    <div class="author-info">
-                                        <div class="author-avatar"><?php echo strtoupper(substr($featured['source'] ?: 'N', 0, 2)); ?></div>
-                                        <div class="author-details">
-                                            <div class="author-name"><?php echo htmlspecialchars($featured['source'] ?: 'Unknown Source'); ?></div>
-                                            <div class="article-date"><?php echo $featured['timeAgo']; ?></div>
-                                        </div>
-                                    </div>
-                                    <span class="read-time">5 min read</span>
+                <article class="featured-article">
+                    <div class="featured-image" style="background-image: url('../images/health_image_fallback.jpg')"></div>
+                    <div class="featured-content">
+                        <span class="featured-badge">Health News</span>
+                        <h3 class="featured-title">Latest Health Research Breakthrough</h3>
+                        <p class="featured-excerpt">Discover the latest findings in medical research that could revolutionize healthcare...</p>
+                        <div class="featured-meta">
+                            <div class="author-info">
+                                <div class="author-avatar">DR</div>
+                                <div class="author-details">
+                                    <div class="author-name">Dr. Health Expert</div>
+                                    <div class="article-date">2 hours ago</div>
                                 </div>
                             </div>
-                        </article>
-                    <?php else: ?>
-                        <div class="loading">Loading featured article...</div>
-                    <?php endif; ?>
-                </div>
+                            <span class="read-time">5 min read</span>
+                        </div>
+                    </div>
+                </article>
             </section>
 
             <!-- Categories -->
             <section class="categories" id="categories">
                 <h2 class="section-title">Browse by Category</h2>
                 <div class="category-grid">
-                    <div class="category-card" data-category="all">
-                        <div class="category-image" style="background-image: url('images/all_categories.jpg')"></div>
+                    <div class="category-card">
+                        <div class="category-image" style="background-image: url('../images/all_categories.jpg')"></div>
                         <div class="category-badge">Popular</div>
                         <div class="category-content">
                             <div class="category-name">All Categories</div>
                             <div class="category-count">View all articles</div>
                         </div>
                     </div>
-                    <div class="category-card" data-category="heart">
-                        <div class="category-image" style="background-image: url('images/heart.jpg')"></div>
+                    <div class="category-card">
+                        <div class="category-image" style="background-image: url('../images/heart.jpg')"></div>
                         <div class="category-badge">New</div>
                         <div class="category-content">
                             <div class="category-name">Heart Health</div>
                             <div class="category-count">Latest articles</div>
                         </div>
                     </div>
-                    <div class="category-card" data-category="nutrition">
-                        <div class="category-image" style="background-image: url('images/nutrition.jpg')"></div>
+                    <div class="category-card">
+                        <div class="category-image" style="background-image: url('../images/nutrition.jpg')"></div>
                         <div class="category-badge">Trending</div>
                         <div class="category-content">
                             <div class="category-name">Nutrition</div>
                             <div class="category-count">Latest articles</div>
                         </div>
                     </div>
-                    <div class="category-card" data-category="fitness">
-                        <div class="category-image" style="background-image: url('images/fitness.jpg')"></div>
+                    <div class="category-card">
+                        <div class="category-image" style="background-image: url('../images/fitness.jpg')"></div>
                         <div class="category-badge">Hot</div>
                         <div class="category-content">
                             <div class="category-name">Fitness</div>
                             <div class="category-count">Latest articles</div>
                         </div>
                     </div>
-                    <div class="category-card" data-category="mental">
-                        <div class="category-image" style="background-image: url('images/mental.jpg')"></div>
+                    <div class="category-card">
+                        <div class="category-image" style="background-image: url('../images/mental.jpg')"></div>
                         <div class="category-badge">Featured</div>
                         <div class="category-content">
                             <div class="category-name">Mental Health</div>
                             <div class="category-count">Latest articles</div>
                         </div>
                     </div>
-                    <div class="category-card" data-category="medicine">
-                        <div class="category-image" style="background-image: url('images/medicine.jpg')"></div>
+                    <div class="category-card">
+                        <div class="category-image" style="background-image: url('../images/medicine.jpg')"></div>
                         <div class="category-badge">Updated</div>
                         <div class="category-content">
                             <div class="category-name">Medicine</div>
                             <div class="category-count">Latest articles</div>
                         </div>
                     </div>
-                    <div class="category-card" data-category="prevention">
-                        <div class="category-image" style="background-image: url('images/prevention.jpg')"></div>
+                    <div class="category-card">
+                        <div class="category-image" style="background-image: url('../images/prevention.jpg')"></div>
                         <div class="category-badge">Essential</div>
                         <div class="category-content">
                             <div class="category-name">Prevention</div>
@@ -1313,34 +1241,29 @@ try {
             <!-- Latest Articles -->
             <section id="articles">
                 <h2 class="section-title">Latest Health Articles</h2>
-                <div class="articles-grid" id="articlesGrid">
-                    <?php if (!empty($latestArticles)): ?>
-                        <?php foreach ($latestArticles as $article): ?>
-                            <article class="article-card">
-                                <div class="article-image" style="background-image: url('<?php echo $article['image'] ?: 'images/health_image_fallback.jpg'; ?>')"></div>
-                                <div class="article-content">
-                                    <span class="article-category">Health</span>
-                                    <h3 class="article-title"><?php echo htmlspecialchars($article['title']); ?></h3>
-                                    <p class="article-excerpt"><?php echo htmlspecialchars(substr($article['description'] ?: '', 0, 100)) . '...'; ?></p>
-                                    <div class="article-meta">
-                                        <span class="article-author"><?php echo htmlspecialchars($article['source'] ?: 'Unknown'); ?></span>
-                                        <div class="article-stats">
-                                            <span><?php echo $article['timeAgo']; ?></span>
-                                        </div>
-                                    </div>
-                                    <div style="margin-top: 15px; display: flex; gap: 10px;">
-                                        <button onclick="openArticle('<?php echo htmlspecialchars($article['url']); ?>')" style="background: #1d4ed8; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">Read Article</button>
-                                        <button onclick="viewWithComments('<?php echo htmlspecialchars($article['url']); ?>', '<?php echo urlencode($article['title']); ?>')" style="background: #16a34a; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">View & Comment</button>
-                                    </div>
+                <div class="articles-grid">
+                    <article class="article-card">
+                        <div class="article-image" style="background-image: url('../images/health_image_fallback.jpg')"></div>
+                        <div class="article-content">
+                            <span class="article-category">Health</span>
+                            <h3 class="article-title">Understanding Heart Disease Prevention</h3>
+                            <p class="article-excerpt">Learn about the latest strategies for preventing heart disease and maintaining cardiovascular health...</p>
+                            <div class="article-meta">
+                                <span class="article-author">Medical Journal</span>
+                                <div class="article-stats">
+                                    <span>3 hours ago</span>
                                 </div>
-                            </article>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <div class="loading">Loading articles...</div>
-                    <?php endif; ?>
+                            </div>
+                            <div style="margin-top: 15px; display: flex; gap: 10px;">
+                                <button style="background: #1d4ed8; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">Read Article</button>
+                                <button style="background: #16a34a; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">View & Comment</button>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- More article cards would go here -->
                 </div>
                 <div style="text-align: center; margin: 40px 0;">
-                    <button id="loadMoreBtn" class="hero-cta" style="background: #1d4ed8; color: white; border: none; cursor: pointer;">Load More Articles</button>
+                    <button class="hero-cta" style="background: #1d4ed8; color: white; border: none; cursor: pointer;">Load More Articles</button>
                 </div>
             </section>
         </main>
@@ -1349,8 +1272,12 @@ try {
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3 class="sidebar-title">Trending This Week</h3>
-                <div id="trendingArticles">
-                    <div class="loading">Loading trending articles...</div>
+                <div class="trending-item">
+                    <div class="trending-image" style="background-image: url('../images/health_image_fallback.jpg'); background-size: cover; background-position: center;"></div>
+                    <div class="trending-content">
+                        <h4>Latest Medical Breakthrough</h4>
+                        <div class="trending-meta">2 hours ago</div>
+                    </div>
                 </div>
             </div>
 
@@ -1381,35 +1308,35 @@ try {
                     <p>Whether you're managing a chronic condition, seeking preventive care guidance, or simply wanting to live a healthier lifestyle, HealthHub is your trusted companion on your wellness journey.</p>
                 </div>
                 <div class="about-image">
-                    <img src="images/health_search.jpg" alt="" height="400" style="border-radius: 16px;">
+                    <img src="../images/health_search.jpg" alt="" height="400" style="border-radius: 16px;">
                 </div>
             </div>
 
             <div class="mission-grid">
                 <div class="mission-card">
                     <div class="mission-icon">
-                        <img src="images/about1.jpg" alt="Evidence-Based Content">
+                        <img src="../images/about1.jpg" alt="Evidence-Based Content">
                     </div>
                     <h4>Evidence-Based Content</h4>
                     <p>All our articles are sourced from peer-reviewed medical journals and verified by healthcare professionals to ensure accuracy and reliability.</p>
                 </div>
                 <div class="mission-card">
                     <div class="mission-icon">
-                        <img src="images/about2.jpg" alt="Global Health Perspective">
+                        <img src="../images/about2.jpg" alt="Global Health Perspective">
                     </div>
                     <h4>Global Health Perspective</h4>
                     <p>We bring you health insights from medical experts worldwide, covering diverse health topics and cultural approaches to wellness.</p>
                 </div>
                 <div class="mission-card">
                     <div class="mission-icon">
-                        <img src="images/about3.jpg" alt="Easy to Understand">
+                        <img src="../images/about3.jpg" alt="Easy to Understand">
                     </div>
                     <h4>Easy to Understand</h4>
                     <p>Complex medical information simplified into clear, actionable insights that help you make informed health decisions.</p>
                 </div>
                 <div class="mission-card">
                     <div class="mission-icon">
-                        <img src="images/health1.jpg" alt="24/7 Support">
+                        <img src="../images/health1.jpg" alt="24/7 Support">
                     </div>
                     <h4>24/7 Support</h4>
                     <p>Round-the-clock access to health resources and expert guidance whenever you need reliable medical information.</p>
@@ -1420,25 +1347,25 @@ try {
                 <h3 class="team-title">Our Expert Team</h3>
                 <div class="team-grid">
                     <div class="team-member">
-                        <div class="team-avatar"><img src="images/doc1.jpg" alt="" width="100px" height="100px" style="border-radius: 50%;"></div>
+                        <div class="team-avatar"><img src="../images/doc1.jpg" alt="" width="100px" height="100px" style="border-radius: 50%;"></div>
                         <div class="team-name">Dr. Sarah Johnson</div>
                         <div class="team-role">Chief Medical Officer</div>
                         <div class="team-bio">Board-certified physician with 15+ years in preventive medicine and public health advocacy.</div>
                     </div>
                     <div class="team-member">
-                        <div class="team-avatar"><img src="images/doc2.jpg" alt="" width="100px" height="100px" style="border-radius: 50%;"></div>
+                        <div class="team-avatar"><img src="../images/doc2.jpg" alt="" width="100px" height="100px" style="border-radius: 50%;"></div>
                         <div class="team-name">Dr. Michael Kim</div>
                         <div class="team-role">Cardiology Specialist</div>
                         <div class="team-bio">Leading cardiologist specializing in heart health research and cardiovascular disease prevention.</div>
                     </div>
                     <div class="team-member">
-                        <div class="team-avatar"><img src="images/doc3.jpg" alt="" width="100px" height="100px" style="border-radius: 50%;"></div>
+                        <div class="team-avatar"><img src="../images/doc3.jpg" alt="" width="100px" height="100px" style="border-radius: 50%;"></div>
                         <div class="team-name">Dr. Emily Parker</div>
                         <div class="team-role">Nutrition Expert</div>
                         <div class="team-bio">Registered dietitian and nutrition scientist focused on evidence-based dietary recommendations.</div>
                     </div>
                     <div class="team-member">
-                        <div class="team-avatar"><img src="images/doc4.jpg" alt="" width="100px" height="100px" style="border-radius: 50%;"></div>
+                        <div class="team-avatar"><img src="../images/doc4.jpg" alt="" width="100px" height="100px" style="border-radius: 50%;"></div>
                         <div class="team-name">Dr. James Liu</div>
                         <div class="team-role">Mental Health Specialist</div>
                         <div class="team-bio">Licensed psychiatrist dedicated to mental health awareness and psychological wellness education.</div>
@@ -1454,7 +1381,7 @@ try {
             <div class="footer-content">
                 <div class="footer-brand">
                     <div class="footer-logo">
-                        <img src="images/hewale.jpg" alt="HealthHub Logo">
+                        <img src="../images/hewale.jpg" alt="HealthHub Logo">
                         <span class="footer-brand-name">HealthHub</span>
                     </div>
                     <p class="footer-description">
@@ -1462,19 +1389,19 @@ try {
                     </p>
                     <div class="footer-social">
                         <a href="#" class="social-link">
-                            <img src="images/facebook.jpg" alt="Facebook" style="width: 24px; height: 24px; border-radius: 4px;">
+                            <img src="../images/facebook.jpg" alt="Facebook" style="width: 24px; height: 24px; border-radius: 4px;">
                         </a>
                         <a href="#" class="social-link">
-                            <img src="images/x.png" alt="X (Twitter)" style="width: 24px; height: 24px; border-radius: 4px;">
+                            <img src="../images/x.png" alt="X (Twitter)" style="width: 24px; height: 24px; border-radius: 4px;">
                         </a>
                         <a href="#" class="social-link">
-                            <img src="images/instagram.jpg" alt="Instagram" style="width: 24px; height: 24px; border-radius: 4px;">
+                            <img src="../images/instagram.jpg" alt="Instagram" style="width: 24px; height: 24px; border-radius: 4px;">
                         </a>
                         <a href="#" class="social-link">
-                            <img src="images/youtube.png" alt="YouTube" style="width: 24px; height: 24px; border-radius: 4px;">
+                            <img src="../images/youtube.png" alt="YouTube" style="width: 24px; height: 24px; border-radius: 4px;">
                         </a>
                         <a href="#" class="social-link">
-                            <img src="images/whatsapp.png" alt="WhatsApp" style="width: 24px; height: 24px; border-radius: 4px;">
+                            <img src="../images/whatsapp.png" alt="WhatsApp" style="width: 24px; height: 24px; border-radius: 4px;">
                         </a>
                     </div>
                 </div>
@@ -1493,11 +1420,11 @@ try {
                 <div class="footer-section">
                     <h4>Health Topics</h4>
                     <ul class="footer-links">
-                        <li><a href="#" onclick="loadCategoryArticles('heart')">Heart Health</a></li>
-                        <li><a href="#" onclick="loadCategoryArticles('nutrition')">Nutrition</a></li>
-                        <li><a href="#" onclick="loadCategoryArticles('fitness')">Fitness</a></li>
-                        <li><a href="#" onclick="loadCategoryArticles('mental')">Mental Health</a></li>
-                        <li><a href="#" onclick="loadCategoryArticles('prevention')">Prevention</a></li>
+                        <li><a href="#">Heart Health</a></li>
+                        <li><a href="#">Nutrition</a></li>
+                        <li><a href="#">Fitness</a></li>
+                        <li><a href="#">Mental Health</a></li>
+                        <li><a href="#">Prevention</a></li>
                     </ul>
                 </div>
 
@@ -1505,19 +1432,19 @@ try {
                     <h4>Contact Info</h4>
                     <div class="footer-contact">
                         <p>
-                            <img src="images/gmail.png" alt="Email" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;">
+                            <img src="../images/gmail.png" alt="Email" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;">
                             info@healthhub.com
                         </p>
                         <p>
-                            <img src="images/call.png" alt="Phone" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;">
+                            <img src="../images/call.png" alt="Phone" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;">
                             +1 (555) 123-4567
                         </p>
                         <p>
-                            <img src="images/location.png" alt="Location" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;">
+                            <img src="../images/location.png" alt="Location" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;">
                             123 Health Street<br>Medical District, NY 10001
                         </p>
                         <p>
-                            <img src="images/time_clock.jpg" alt="Support" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle; border-radius: 3px;">
+                            <img src="../images/time_clock.jpg" alt="Support" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle; border-radius: 3px;">
                             24/7 Support Available
                         </p>
                     </div>
@@ -1526,7 +1453,7 @@ try {
 
             <div class="footer-bottom">
                 <div class="footer-copyright">
-                    © <?php echo date('Y'); ?> HealthHub. All rights reserved.
+                    © 2024 HealthHub. All rights reserved.
                 </div>
                 <div class="footer-legal">
                     <a href="#">Privacy Policy</a>
@@ -1536,358 +1463,5 @@ try {
             </div>
         </div>
     </footer>
-
-    <script>
-        // Open article in new tab
-        function openArticle(url) {
-            if (url) {
-                window.open(url, '_blank');
-            }
-        }
-
-        // View article with comments
-        function viewWithComments(url, title) {
-            if (url && title) {
-                window.open(`article_view.php?url=${encodeURIComponent(url)}&title=${title}`, '_blank');
-            }
-        }
-
-        // Scroll to section function
-        function scrollToSection(selector) {
-            document.querySelector(selector).scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
-
-        // Search functionality
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const query = this.value.trim();
-                if (query) {
-                    performSearch(query);
-                }
-            }
-        });
-        
-        // Add search icon click functionality
-        document.querySelector('.search-icon').addEventListener('click', function() {
-            const query = document.getElementById('searchInput').value.trim();
-            if (query) {
-                performSearch(query);
-            }
-        });
-        
-        // Add search suggestions
-        const searchSuggestions = [
-            'heart disease', 'diabetes', 'cancer prevention', 'mental health',
-            'nutrition tips', 'exercise benefits', 'weight loss', 'sleep disorders',
-            'blood pressure', 'cholesterol', 'immune system', 'stress management',
-            'healthy diet', 'vitamins', 'meditation', 'yoga benefits'
-        ];
-        
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const query = this.value.trim().toLowerCase();
-            const suggestions = document.getElementById('searchSuggestions');
-            
-            if (query.length > 1) {
-                const matches = searchSuggestions.filter(s => s.toLowerCase().includes(query));
-                if (matches.length > 0) {
-                    suggestions.innerHTML = matches.slice(0, 5).map(match => 
-                        `<div class="search-suggestion" onclick="selectSuggestion('${match}')">${match}</div>`
-                    ).join('');
-                    suggestions.style.display = 'block';
-                } else {
-                    suggestions.style.display = 'none';
-                }
-            } else {
-                suggestions.style.display = 'none';
-            }
-        });
-        
-        // Hide suggestions when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.search-container')) {
-                document.getElementById('searchSuggestions').style.display = 'none';
-            }
-        });
-        
-        function selectSuggestion(suggestion) {
-            document.getElementById('searchInput').value = suggestion;
-            document.getElementById('searchSuggestions').style.display = 'none';
-            performSearch(suggestion);
-        }
-
-        // Perform search function
-        function performSearch(query) {
-            // Scroll to articles section
-            document.querySelector('#articles').scrollIntoView({ behavior: 'smooth' });
-            
-            // Update section title
-            document.querySelector('#articles .section-title').textContent = `Search Results for "${query}"`;
-            
-            // Show loading
-            const articlesGrid = document.getElementById('articlesGrid');
-            articlesGrid.innerHTML = '<div class="loading">Searching articles...</div>';
-
-            // Search with multiple strategies
-            const searchPromises = [
-                fetch(`simple_gnews.php?action=search&q=${encodeURIComponent(query + ' health')}&max=20`),
-                fetch(`simple_gnews.php?action=search&q=${encodeURIComponent(query + ' medical')}&max=20`),
-                fetch(`simple_gnews.php?action=search&q=${encodeURIComponent(query)}&max=20`)
-            ];
-            
-            Promise.all(searchPromises)
-                .then(responses => Promise.all(responses.map(r => r.json())))
-                .then(results => {
-                    let allArticles = [];
-                    results.forEach(data => {
-                        if (data.success && data.articles) {
-                            allArticles = allArticles.concat(data.articles);
-                        }
-                    });
-                    
-                    // Remove duplicates based on URL
-                    const uniqueArticles = allArticles.filter((article, index, self) => 
-                        index === self.findIndex(a => a.url === article.url)
-                    );
-                    
-                    if (uniqueArticles.length > 0) {
-                        displayArticles(uniqueArticles.slice(0, 24)); // Show max 24 results
-                    } else {
-                        articlesGrid.innerHTML = `
-                            <div class="loading">
-                                <h3>No articles found for "${query}"</h3>
-                                <p>Try searching for:</p>
-                                <ul style="text-align: left; margin: 20px 0;">
-                                    <li>• Health conditions (diabetes, heart disease, cancer)</li>
-                                    <li>• Body parts (brain, heart, lungs, liver)</li>
-                                    <li>• Treatments (medicine, surgery, therapy)</li>
-                                    <li>• Lifestyle topics (diet, exercise, sleep)</li>
-                                    <li>• General terms (nutrition, fitness, wellness)</li>
-                                </ul>
-                            </div>
-                        `;
-                    }
-                })
-                .catch(error => {
-                    console.error('Search error:', error);
-                    articlesGrid.innerHTML = '<div class="loading">Error searching articles. Please try again.</div>';
-                });
-        }
-
-        // Category click functionality
-        document.querySelectorAll('.category-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const category = this.dataset.category;
-                loadCategoryArticles(category);
-            });
-        });
-
-        // Load category articles
-        function loadCategoryArticles(category) {
-            const articlesGrid = document.getElementById('articlesGrid');
-            articlesGrid.innerHTML = '<div class="loading">Loading articles...</div>';
-            
-            // Handle "All Categories" button
-            if (category === 'all') {
-                fetch(`simple_gnews.php?action=search&q=${encodeURIComponent('health wellness')}&max=50`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success && data.articles.length > 0) {
-                            displayArticles(data.articles);
-                            document.querySelector('#articles .section-title').textContent = 'Latest Health Articles';
-                            document.querySelector('#articles').scrollIntoView({ behavior: 'smooth' });
-                        } else {
-                            articlesGrid.innerHTML = '<div class="loading">No articles found.</div>';
-                        }
-                    })
-                    .catch(error => {
-                        console.error('All categories load error:', error);
-                        articlesGrid.innerHTML = '<div class="loading">Error loading articles.</div>';
-                    });
-                return;
-            }
-            
-            // Map categories to search terms
-            const categoryQueries = {
-                'heart': 'heart health cardiovascular',
-                'nutrition': 'nutrition diet food healthy eating',
-                'fitness': 'fitness exercise workout physical activity',
-                'mental': 'mental health psychology wellness',
-                'medicine': 'medicine medical treatment drugs',
-                'prevention': 'prevention healthcare disease prevention'
-            };
-            
-            const query = categoryQueries[category] || category;
-
-            fetch(`simple_gnews.php?action=search&q=${encodeURIComponent(query)}&max=12`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success && data.articles.length > 0) {
-                        displayArticles(data.articles);
-                        document.querySelector('#articles .section-title').textContent = `${category.charAt(0).toUpperCase() + category.slice(1)} Articles`;
-                        // Scroll to articles section
-                        document.querySelector('#articles').scrollIntoView({ behavior: 'smooth' });
-                    } else {
-                        articlesGrid.innerHTML = '<div class="loading">No articles found for this category.</div>';
-                    }
-                })
-                .catch(error => {
-                    console.error('Category load error:', error);
-                    articlesGrid.innerHTML = '<div class="loading">Error loading articles.</div>';
-                });
-        }
-
-        // Display articles
-        function displayArticles(articles) {
-            const articlesGrid = document.getElementById('articlesGrid');
-            articlesGrid.innerHTML = articles.map(article => `
-                <article class="article-card">
-                    <div class="article-image" style="background-image: url('${article.image || './images/health_image_fallback.jpg'}'); background-size: cover; background-position: center;"></div>
-                    <div class="article-content">
-                        <span class="article-category">Health</span>
-                        <h3 class="article-title">${article.title}</h3>
-                        <p class="article-excerpt">${(article.description || '').substring(0, 100)}...</p>
-                        <div class="article-meta">
-                            <span class="article-author">${article.source || 'Unknown'}</span>
-                            <div class="article-stats">
-                                <span>${article.timeAgo}</span>
-                            </div>
-                        </div>
-                        <div style="margin-top: 15px; display: flex; gap: 10px;">
-                            <button onclick="openArticle('${article.url}')" style="background: #1d4ed8; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">Read Article</button>
-                            <button onclick="viewWithComments('${article.url}', '${encodeURIComponent(article.title)}')" style="background: #16a34a; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">View & Comment</button>
-                        </div>
-                    </div>
-                </article>
-            `).join('');
-        }
-
-        // Load trending articles for sidebar
-        function loadTrendingArticles() {
-            const trendingQueries = ['medical breakthrough', 'wellness tips', 'health research', 'nutrition facts'];
-            const promises = trendingQueries.map(query => 
-                fetch(`simple_gnews.php?action=search&q=${encodeURIComponent(query)}&max=4`)
-                    .then(response => response.json())
-            );
-            
-            Promise.all(promises)
-                .then(results => {
-                    const trendingArticles = [];
-                    results.forEach(data => {
-                        if (data.success && data.articles.length > 0) {
-                            trendingArticles.push(...data.articles);
-                        }
-                    });
-                    
-                    if (trendingArticles.length > 0) {
-                        const trendingContainer = document.getElementById('trendingArticles');
-                        trendingContainer.innerHTML = trendingArticles.slice(0, 4).map(article => `
-                            <div class="trending-item" onclick="openArticle('${article.url}')">
-                                <div class="trending-image" style="background-image: url('${article.image || './images/health_image_fallback.jpg'}'); background-size: cover; background-position: center;"></div>
-                                <div class="trending-content">
-                                    <h4>${article.title.substring(0, 60)}...</h4>
-                                    <div class="trending-meta">${article.timeAgo}</div>
-                                </div>
-                            </div>
-                        `).join('');
-                    }
-                })
-                .catch(error => console.error('Trending articles error:', error));
-        }
-
-        // Smooth scroll for hero CTA
-        document.querySelector('.hero-cta').addEventListener('click', function(e) {
-            e.preventDefault();
-            document.querySelector('#articles').scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-
-        // Load more articles functionality
-        let loadMoreCounter = 0;
-        document.getElementById('loadMoreBtn').addEventListener('click', function() {
-            this.textContent = 'Loading...';
-            this.disabled = true;
-            
-            // Use different search terms to get variety
-            const searchTerms = [
-                'medical research health',
-                'wellness fitness nutrition',
-                'healthcare medicine',
-                'health news medical',
-                'disease prevention health',
-                'mental health wellness',
-                'nutrition diet health',
-                'medical breakthrough',
-                'health tips wellness',
-                'healthcare news'
-            ];
-            
-            const searchTerm = searchTerms[loadMoreCounter % searchTerms.length];
-            loadMoreCounter++;
-            
-            fetch(`simple_gnews.php?action=search&q=${encodeURIComponent(searchTerm)}&max=30`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success && data.articles.length > 0) {
-                        // Filter out existing articles
-                        const existingUrls = Array.from(document.querySelectorAll('.article-card')).map(card => 
-                            card.getAttribute('onclick').match(/'([^']+)'/)[1]
-                        );
-                        
-                        const newArticles = data.articles.filter(article => !existingUrls.includes(article.url));
-                        
-                        if (newArticles.length > 0) {
-                            const newArticlesHtml = newArticles.map(article => `
-                                <article class="article-card">
-                                    <div class="article-image" style="background-image: url('${article.image || './images/health_image_fallback.jpg'}'); background-size: cover; background-position: center;"></div>
-                                    <div class="article-content">
-                                        <span class="article-category">Health</span>
-                                        <h3 class="article-title">${article.title}</h3>
-                                        <p class="article-excerpt">${(article.description || '').substring(0, 100)}...</p>
-                                        <div class="article-meta">
-                                            <span class="article-author">${article.source || 'Unknown'}</span>
-                                            <div class="article-stats">
-                                                <span>${article.timeAgo}</span>
-                                            </div>
-                                        </div>
-                                        <div style="margin-top: 15px; display: flex; gap: 10px;">
-                                            <button onclick="openArticle('${article.url}')" style="background: #1d4ed8; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">Read Article</button>
-                                            <button onclick="viewWithComments('${article.url}', '${encodeURIComponent(article.title)}')" style="background: #16a34a; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">View & Comment</button>
-                                        </div>
-                                    </div>
-                                </article>
-                            `).join('');
-                            
-                            document.getElementById('articlesGrid').innerHTML += newArticlesHtml;
-                            const totalArticles = document.querySelectorAll('.article-card').length;
-                            this.textContent = `Load More Articles (${totalArticles} total)`;
-                            
-                            // Hide button if we have 150+ articles
-                            if (totalArticles >= 150) {
-                                this.textContent = 'All articles loaded';
-                                this.disabled = true;
-                            }
-                        } else {
-                            this.textContent = 'No new articles found';
-                        }
-                        this.disabled = false;
-                    } else {
-                        this.textContent = 'No more articles';
-                    }
-                })
-                .catch(error => {
-                    console.error('Load more error:', error);
-                    this.textContent = 'Error loading articles';
-                    this.disabled = false;
-                });
-        });
-
-        // Load trending articles on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            loadTrendingArticles();
-        });
-    </script>
 </body>
 </html>

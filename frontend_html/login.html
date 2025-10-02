@@ -1,39 +1,3 @@
-<?php 
-session_start();
-include('config.php');
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    // Validate and sanitize input
-    $username = $sql->real_escape_string($username);
-    $password = $sql->real_escape_string($password);
-
-    // Check if user exists
-    $result = $sql->query("SELECT * FROM users WHERE username = '$username'");
-
-    $login_success = false;
-    $error_message = '';
-    
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-        if (password_verify($password, $user['password'])) {
-            $login_success = true;
-            $_SESSION['username'] = $user['username'];
-        } else {
-            $error_message = 'Invalid password!';
-        }
-    } else {
-        $error_message = 'User not found!';
-    }
-}
-
-?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/health2.jpg');
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('../images/health2.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -207,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1 class="login-title">Login</h1>
         <p class="login-subtitle">Welcome back please login to your account</p>
         
-        <form action="login.php" method="POST">
+        <form action="#" method="POST">
             <div class="form-group">
                 <input type="text" class="form-input" name="username" placeholder="User Name" required>
                 <span class="input-icon">👤</span>
@@ -226,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit" class="login-btn">Login</button>
             
             <div class="signup-link">
-                Don't have an account? <a href="register.php">Signup</a>
+                Don't have an account? <a href="register.html">Signup</a>
             </div>
             
             <div class="footer-text">
@@ -239,28 +203,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="corner-btn">↗️</div>
         <div class="corner-btn">🔄</div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <?php if (isset($login_success) && $login_success): ?>
-    <script>
-        Swal.fire({
-            title: 'Success!',
-            text: 'Login successful!',
-            icon: 'success',
-            confirmButtonText: 'OK'
-        }).then(() => {
-            window.location.href = 'index.php';
-        });
-    </script>
-    <?php elseif (isset($error_message) && !empty($error_message)): ?>
-    <script>
-        Swal.fire({
-            title: 'Error!',
-            text: '<?php echo $error_message; ?>',
-            icon: 'error',
-            confirmButtonText: 'OK'
-        });
-    </script>
-    <?php endif; ?>
 </body>
 </html>

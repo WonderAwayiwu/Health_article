@@ -1,48 +1,9 @@
-<?php 
-
-include('config.php');
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    // Validate and sanitize input
-    $username = $sql->real_escape_string($username);
-    $email = $sql->real_escape_string($email);
-    $password = $sql->real_escape_string($password);
-
-    // Hash the password
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-    // Insert user into database
-    $sql->query("INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashed_password')");
-
-
-
-    $success = false;
-    $error_message = '';
-    
-    if ($sql->affected_rows > 0) {
-        $success = true;
-    } else {
-        $error_message = $sql->error;
-    }
-}
-
-?>
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - Health Article</title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         * {
             margin: 0;
@@ -53,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/health1.jpg');
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/health1.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -184,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="signup-container">
         <h1 class="signup-title">SIGN UP</h1>
         
-        <form action="register.php" method="POST">
+        <form action="#" method="POST">
             <div class="form-group">
                 <input type="text" class="form-input" name="username" placeholder="Username" required>
             </div>
@@ -204,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             
             <div class="login-link">
-                Already have an account <a href="login.php">Sign In</a>
+                Already have an account <a href="login.html">Sign In</a>
             </div>
             
             <div class="footer-text">
@@ -217,27 +178,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="corner-btn">↗️</div>
         <div class="corner-btn">🔄</div>
     </div>
-
-    <?php if (isset($success) && $success): ?>
-    <script>
-        Swal.fire({
-            title: 'Success!',
-            text: 'User registered successfully!',
-            icon: 'success',
-            confirmButtonText: 'OK'
-        }).then(() => {
-            window.location.href = 'login.php';
-        });
-    </script>
-    <?php elseif (isset($error_message) && !empty($error_message)): ?>
-    <script>
-        Swal.fire({
-            title: 'Error!',
-            text: 'Error: <?php echo $error_message; ?>',
-            icon: 'error',
-            confirmButtonText: 'OK'
-        });
-    </script>
-    <?php endif; ?>
 </body>
 </html>
