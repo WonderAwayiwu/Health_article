@@ -12,7 +12,7 @@ require_once 'simple_gnews.php';
 
 // Initialize the article fetcher
 try {
-    $fetcher = new SimpleHealthArticleFetcher('9f7017d1ceb3b6c5bf3e382756bd2426');
+    $fetcher = new SimpleHealthArticleFetcher('c340b2bd078a952859973d7379bba362');
     $featuredArticles = $fetcher->fetchTopHealthHeadlines(30);
     $latestArticles = $fetcher->fetchHealthArticles('health wellness', 50);
 } catch (Exception $e) {
@@ -165,12 +165,10 @@ try {
             height: 100%;
             opacity: 0.6;
             transition: opacity 0.3s ease;
-            /* filter: brightness(0) saturate(100%) invert(45%) sepia(8%) saturate(1037%) hue-rotate(202deg) brightness(95%) contrast(92%); */
         }
         
         .search-icon:hover img {
             opacity: 0.8;
-            /* filter: brightness(0) saturate(100%) invert(42%) sepia(93%) saturate(1352%) hue-rotate(204deg) brightness(99%) contrast(107%); */
         }
 
         .search-suggestions {
@@ -1807,13 +1805,14 @@ try {
         // Load more articles functionality
         let loadMoreCounter = 0;
         document.getElementById('loadMoreBtn').addEventListener('click', function() {
-            this.textContent = 'Loading...';
-            this.disabled = true;
+            const btn = this;
+            btn.textContent = 'Loading...';
+            btn.disabled = true;
             
             // Use different search terms to get variety
             const searchTerms = [
                 'medical research health',
-                'wellness fitness nutrition',
+                'wellness fitness nutrition', 
                 'healthcare medicine',
                 'health news medical',
                 'disease prevention health',
@@ -1821,40 +1820,71 @@ try {
                 'nutrition diet health',
                 'medical breakthrough',
                 'health tips wellness',
-                'healthcare news'
+                'healthcare news',
+                'cardiology heart health',
+                'diabetes management',
+                'cancer research treatment',
+                'immunology vaccines',
+                'neurology brain health'
             ];
             
             const searchTerm = searchTerms[loadMoreCounter % searchTerms.length];
             loadMoreCounter++;
             
-            fetch(`simple_gnews.php?action=search&q=${encodeURIComponent(searchTerm)}&max=30`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success && data.articles.length > 0) {
-                        // Filter out existing articles
-                        const existingUrls = Array.from(document.querySelectorAll('.article-card')).map(card => 
-                            card.getAttribute('onclick').match(/'([^']+)'/)[1]
-                        );
+            // Try multiple approaches to get articles
+            const fetchPromises = [
+                fetch(`simple_gnews.php?action=search&q=${encodeURIComponent(searchTerm)}&max=20`).then(r => r.json()),
+                fetch(`load_more_articles.php?action=load_more&count=30`).then(r => r.json()),
+                fetch(`backup_articles.php?count=20`).then(r => r.json()) // Backup system
+            ];
+            
+            Promise.allSettled(fetchPromises)
+                .then(results => {
+                    let allArticles = [];
+                    let hasApiData = false;
+                    
+                    // Collect articles from successful requests
+                    results.forEach(result => {
+                        if (result.status === 'fulfilled' && result.value.success && result.value.articles) {
+                            allArticles = allArticles.concat(result.value.articles);
+                            if (result.value.source !== 'backup') {
+                                hasApiData = true;
+                            }
+                        }
+                    });
+                    
+                    if (allArticles.length > 0) {
+                        // Get existing article URLs to avoid duplicates
+                        const existingUrls = new Set();
+                        document.querySelectorAll('.article-card').forEach(card => {
+                            const buttons = card.querySelectorAll('button[onclick*="openArticle"]');
+                            if (buttons.length > 0) {
+                                const onclick = buttons[0].getAttribute('onclick');
+                                const match = onclick.match(/openArticle\('([^']+)'\)/);
+                                if (match) existingUrls.add(match[1]);
+                            }
+                        });
                         
-                        const newArticles = data.articles.filter(article => !existingUrls.includes(article.url));
+                        // Filter out duplicates
+                        const newArticles = allArticles.filter(article => !existingUrls.has(article.url));
                         
                         if (newArticles.length > 0) {
-                            const newArticlesHtml = newArticles.map(article => `
+                            const newArticlesHtml = newArticles.slice(0, 20).map(article => `
                                 <article class="article-card">
                                     <div class="article-image" style="background-image: url('${article.image || './images/health_image_fallback.jpg'}'); background-size: cover; background-position: center;"></div>
                                     <div class="article-content">
                                         <span class="article-category">Health</span>
-                                        <h3 class="article-title">${article.title}</h3>
-                                        <p class="article-excerpt">${(article.description || '').substring(0, 100)}...</p>
+                                        <h3 class="article-title">${escapeHtml(article.title || 'Untitled')}</h3>
+                                        <p class="article-excerpt">${escapeHtml((article.description || '').substring(0, 100))}...</p>
                                         <div class="article-meta">
-                                            <span class="article-author">${article.source || 'Unknown'}</span>
+                                            <span class="article-author">${escapeHtml(article.source || 'Unknown')}</span>
                                             <div class="article-stats">
-                                                <span>${article.timeAgo}</span>
+                                                <span>${escapeHtml(article.timeAgo || 'Recently')}</span>
                                             </div>
                                         </div>
                                         <div style="margin-top: 15px; display: flex; gap: 10px;">
-                                            <button onclick="openArticle('${article.url}')" style="background: #1d4ed8; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">Read Article</button>
-                                            <button onclick="viewWithComments('${article.url}', '${encodeURIComponent(article.title)}')" style="background: #16a34a; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">View & Comment</button>
+                                            <button onclick="openArticle('${escapeHtml(article.url)}')" style="background: #1d4ed8; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">Read Article</button>
+                                            <button onclick="viewWithComments('${escapeHtml(article.url)}', '${encodeURIComponent(article.title || 'Article')}')" style="background: #16a34a; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">View & Comment</button>
                                         </div>
                                     </div>
                                 </article>
@@ -1862,27 +1892,78 @@ try {
                             
                             document.getElementById('articlesGrid').innerHTML += newArticlesHtml;
                             const totalArticles = document.querySelectorAll('.article-card').length;
-                            this.textContent = `Load More Articles (${totalArticles} total)`;
+                            btn.textContent = `Load More Articles (${totalArticles} loaded)`;
+                            btn.disabled = false;
                             
-                            // Hide button if we have 150+ articles
-                            if (totalArticles >= 150) {
-                                this.textContent = 'All articles loaded';
-                                this.disabled = true;
+                            // Show message if using backup data
+                            if (!hasApiData && allArticles.some(a => a.source === 'backup')) {
+                                btn.textContent += ' (Offline Mode)';
+                            }
+                            
+                            // Hide button if we have too many articles
+                            if (totalArticles >= 200) {
+                                btn.textContent = 'All articles loaded';
+                                btn.disabled = true;
                             }
                         } else {
-                            this.textContent = 'No new articles found';
+                            btn.textContent = 'No new articles available';
+                            btn.disabled = false;
                         }
-                        this.disabled = false;
                     } else {
-                        this.textContent = 'No more articles';
+                        // Last resort: try backup articles directly
+                        fetch('backup_articles.php?count=12')
+                            .then(r => r.json())
+                            .then(backupData => {
+                                if (backupData.success && backupData.articles.length > 0) {
+                                    const backupHtml = backupData.articles.map(article => `
+                                        <article class="article-card">
+                                            <div class="article-image" style="background-image: url('${article.image}'); background-size: cover; background-position: center;"></div>
+                                            <div class="article-content">
+                                                <span class="article-category">Health</span>
+                                                <h3 class="article-title">${escapeHtml(article.title)}</h3>
+                                                <p class="article-excerpt">${escapeHtml(article.description.substring(0, 100))}...</p>
+                                                <div class="article-meta">
+                                                    <span class="article-author">${escapeHtml(article.source)}</span>
+                                                    <div class="article-stats">
+                                                        <span>${escapeHtml(article.timeAgo)}</span>
+                                                    </div>
+                                                </div>
+                                                <div style="margin-top: 15px; display: flex; gap: 10px;">
+                                                    <button onclick="openArticle('${escapeHtml(article.url)}')" style="background: #1d4ed8; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">Read Article</button>
+                                                    <button onclick="viewWithComments('${escapeHtml(article.url)}', '${encodeURIComponent(article.title)}')" style="background: #16a34a; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">View & Comment</button>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    `).join('');
+                                    
+                                    document.getElementById('articlesGrid').innerHTML += backupHtml;
+                                    const totalArticles = document.querySelectorAll('.article-card').length;
+                                    btn.textContent = `Load More Articles (${totalArticles} loaded - Offline Mode)`;
+                                    btn.disabled = false;
+                                } else {
+                                    btn.textContent = 'Unable to load articles - Try again';
+                                    btn.disabled = false;
+                                }
+                            })
+                            .catch(() => {
+                                btn.textContent = 'Unable to load articles - Try again';
+                                btn.disabled = false;
+                            });
                     }
                 })
                 .catch(error => {
                     console.error('Load more error:', error);
-                    this.textContent = 'Error loading articles';
-                    this.disabled = false;
+                    btn.textContent = 'Error - Click to retry';
+                    btn.disabled = false;
                 });
         });
+        
+        // Helper function to escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
 
         // Load trending articles on page load
         document.addEventListener('DOMContentLoaded', function() {

@@ -225,7 +225,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])) {
     header('Content-Type: application/json');
     
     try {
-        $fetcher = new SimpleHealthArticleFetcher('9f7017d1ceb3b6c5bf3e382756bd2426');
+        $fetcher = new SimpleHealthArticleFetcher('c340b2bd078a952859973d7379bba362');
         
         switch ($_GET['action']) {
             case 'top_headlines':
