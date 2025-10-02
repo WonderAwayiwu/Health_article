@@ -1,3 +1,7 @@
+<?php
+session_start();
+$logged_in_user = isset($_SESSION['username']) ? $_SESSION['username'] : '';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,58 +51,58 @@
         
         .article-section {
             flex: 1;
-            background: url('article_view_background.jpg') center/cover;
+            background: white;
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .article-section::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            /* background: linear-gradient(135deg, rgba(22, 163, 74, 0.8), rgba(16, 185, 129, 0.1)); */
+            overflow-y: auto;
+            padding: 60px 20px 20px 20px;
         }
         
         .article-card {
-            position: relative;
-            z-index: 2;
-            max-width: 700px;
-            max-height: 80vh;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            width: 100%;
+            background: white;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .article-content-display {
+            width: 100%;
+            height: calc(100vh - 120px);
             overflow-y: auto;
+            background: white;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
         }
         
         .article-title {
-            font-size: 32px;
-            font-weight: 800;
+            font-size: 28px;
+            font-weight: 700;
             color: #1a1a1a;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             line-height: 1.3;
+            padding: 0 20px;
         }
         
         .article-content {
             font-size: 16px;
             line-height: 1.6;
             color: #4b5563;
-            margin-bottom: 20px;
-            text-align: left;
+            padding: 0 20px;
         }
         
         .article-summary {
+            padding: 20px;
             text-align: center;
-            margin-bottom: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            margin: 20px;
         }
         
         .article-full-content {
             display: none;
-            text-align: left;
-            margin-top: 20px;
+            width: 100%;
+            height: 100%;
         }
         
         .loading-spinner {
@@ -157,12 +161,13 @@
         }
         
         .comments-section {
-            width: 420px;
+            width: 380px;
             background: white;
             border-left: 1px solid #e5e7eb;
             display: flex;
             flex-direction: column;
             height: 100vh;
+            flex-shrink: 0;
         }
         
         .comments-header {
@@ -399,27 +404,74 @@
             font-size: 14px;
         }
         
-        @media (max-width: 768px) {
+        .pagination {
+            padding: 15px 20px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f9fafb;
+        }
+        
+        .pagination-info {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        
+        .pagination-controls {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .pagination-btn {
+            background: white;
+            border: 1px solid #d1d5db;
+            color: #374151;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .pagination-btn:hover:not(:disabled) {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+        }
+        
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination-btn.active {
+            background: #16a34a;
+            color: white;
+            border-color: #16a34a;
+        }
+        
+        @media (max-width: 1024px) {
             .main-container {
                 flex-direction: column;
             }
             
             .article-section {
-                height: 60vh;
+                height: 65vh;
+                padding: 50px 10px 10px 10px;
             }
             
             .comments-section {
                 width: 100%;
-                height: 40vh;
-            }
-            
-            .article-card {
-                padding: 30px 20px;
-                margin: 20px;
+                height: 35vh;
             }
             
             .article-title {
                 font-size: 24px;
+                padding: 0 10px;
+            }
+            
+            .article-content {
+                padding: 0 10px;
             }
             
             .back-btn {
@@ -450,6 +502,7 @@
                 
                 <div class="article-summary" id="articleSummary">
                     <p>Click on an article from the main page to view it here with comments.</p>
+                    <button class="read-full-btn" onclick="loadFullArticle()" style="display: none;">View Full Article</button>
                 </div>
                 
                 <div class="loading-spinner" id="loadingSpinner">
@@ -458,8 +511,7 @@
                 </div>
                 
                 <div class="article-full-content" id="articleFullContent">
-                    <button class="back-to-summary" onclick="showSummary()">← Back to Summary</button>
-                    <div id="fullArticleText"></div>
+                    <div class="article-content-display" id="articleContentDisplay"></div>
                 </div>
             </div>
         </div>
@@ -474,11 +526,16 @@
                 <div class="no-comments">No comments yet. Be the first to share your thoughts!</div>
             </div>
             
+            <div class="pagination" id="commentsPagination" style="display: none;">
+                <div class="pagination-info" id="paginationInfo"></div>
+                <div class="pagination-controls" id="paginationControls"></div>
+            </div>
+            
             <div class="comment-input-section">
-                <div class="user-info-form" id="userInfoForm">
+                <div class="user-info-form" id="userInfoForm" style="<?php echo $logged_in_user ? 'display: none;' : ''; ?>">
                     <div class="form-row">
-                        <input type="text" id="userName" placeholder="Your name" required>
-                        <input type="email" id="userEmail" placeholder="Your email" required>
+                        <input type="text" id="userName" placeholder="Your name" <?php echo $logged_in_user ? '' : 'required'; ?>>
+                        <input type="email" id="userEmail" placeholder="Your email (optional)">
                     </div>
                     <button class="save-info-btn" onclick="saveUserInfo()">Save Info</button>
                 </div>
@@ -501,14 +558,18 @@
     <script>
         let currentArticleUrl = '';
         let currentArticleTitle = '';
-        let userName = localStorage.getItem('healthhub_username') || '';
+        let userName = '<?php echo $logged_in_user; ?>' || localStorage.getItem('healthhub_username') || '';
         let userEmail = localStorage.getItem('healthhub_email') || '';
+        let currentPage = 1;
+        let totalPages = 1;
 
         // Initialize user info
-        if (userName && userEmail) {
+        if (userName) {
             document.getElementById('userAvatar').textContent = userName.charAt(0).toUpperCase();
             document.getElementById('userName').value = userName;
-            document.getElementById('userEmail').value = userEmail;
+            if (userEmail) {
+                document.getElementById('userEmail').value = userEmail;
+            }
         }
 
         // Get article data from URL parameters
@@ -521,10 +582,12 @@
             currentArticleTitle = decodeURIComponent(articleTitle);
             document.getElementById('articleTitle').textContent = currentArticleTitle;
             document.getElementById('articleSummary').innerHTML = `
-                <p><strong>Source:</strong> <button class="read-full-btn" onclick="loadFullArticle()">Read full article</button></p>
-                <p>This article is fetched from an external source. Click the button above to read the complete article here.</p>
+                <p><strong>Source:</strong> ${new URL(articleUrl).hostname}</p>
+                <p>Loading the full article content...</p>
             `;
             loadComments();
+            // Auto-load the full article
+            setTimeout(loadFullArticle, 1000);
         }
 
         // Auto-resize textarea
@@ -539,7 +602,8 @@
 
         // Show user form
         function showUserForm() {
-            if (!userName || !userEmail) {
+            // Only show form if no logged-in user
+            if (!userName) {
                 document.getElementById('userInfoForm').style.display = 'block';
                 document.getElementById('userName').focus();
             }
@@ -550,13 +614,15 @@
             const nameInput = document.getElementById('userName');
             const emailInput = document.getElementById('userEmail');
             
-            if (nameInput.value.trim() && emailInput.value.trim()) {
+            if (nameInput.value.trim()) {
                 userName = nameInput.value.trim();
                 userEmail = emailInput.value.trim();
                 
-                // Save to localStorage
-                localStorage.setItem('healthhub_username', userName);
-                localStorage.setItem('healthhub_email', userEmail);
+                // Save to localStorage only if not logged in
+                if (!'<?php echo $logged_in_user; ?>') {
+                    localStorage.setItem('healthhub_username', userName);
+                    localStorage.setItem('healthhub_email', userEmail);
+                }
                 
                 // Update avatar
                 document.getElementById('userAvatar').textContent = userName.charAt(0).toUpperCase();
@@ -590,7 +656,8 @@
             
             if (!commentText) return;
             
-            if (!userName || !userEmail) {
+            // If no logged-in user and no stored info, show form
+            if (!userName) {
                 showUserForm();
                 return;
             }
@@ -600,7 +667,7 @@
             formData.append('article_url', currentArticleUrl);
             formData.append('article_title', currentArticleTitle);
             formData.append('user_name', userName);
-            formData.append('user_email', userEmail);
+            formData.append('user_email', userEmail || 'user@example.com');
             formData.append('comment_text', commentText);
             
             // Disable send button
@@ -616,7 +683,7 @@
                 if (data.success) {
                     document.getElementById('commentInput').value = '';
                     document.getElementById('commentInput').style.height = 'auto';
-                    loadComments();
+                    loadComments(1); // Reset to first page after new comment
                 } else {
                     alert('Error: ' + data.message);
                 }
@@ -635,7 +702,6 @@
             document.getElementById('loadingSpinner').style.display = 'block';
             document.getElementById('articleSummary').style.display = 'none';
             
-            // Create a proxy to fetch the article content
             fetch('fetch_article.php', {
                 method: 'POST',
                 headers: {
@@ -648,20 +714,26 @@
                 document.getElementById('loadingSpinner').style.display = 'none';
                 
                 if (data.success) {
-                    document.getElementById('fullArticleText').innerHTML = data.content;
+                    document.getElementById('articleContentDisplay').innerHTML = data.content;
                     document.getElementById('articleFullContent').style.display = 'block';
                 } else {
-                    // Fallback: open in new tab if fetching fails
-                    window.open(currentArticleUrl, '_blank');
+                    document.getElementById('articleSummary').innerHTML = `
+                        <p><strong>Unable to load article content</strong></p>
+                        <p>Click the button below to view the article in a new tab:</p>
+                        <button class="read-full-btn" onclick="window.open('${currentArticleUrl}', '_blank')">Open Article</button>
+                    `;
                     document.getElementById('articleSummary').style.display = 'block';
                 }
             })
             .catch(error => {
                 console.error('Error loading article:', error);
                 document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('articleSummary').innerHTML = `
+                    <p><strong>Unable to load article content</strong></p>
+                    <p>Click the button below to view the article in a new tab:</p>
+                    <button class="read-full-btn" onclick="window.open('${currentArticleUrl}', '_blank')">Open Article</button>
+                `;
                 document.getElementById('articleSummary').style.display = 'block';
-                // Fallback: open in new tab
-                window.open(currentArticleUrl, '_blank');
             });
         }
         
@@ -669,18 +741,22 @@
         function showSummary() {
             document.getElementById('articleFullContent').style.display = 'none';
             document.getElementById('articleSummary').style.display = 'block';
+            document.getElementById('articleContentDisplay').innerHTML = '';
         }
 
-        // Load comments
-        function loadComments() {
-            fetch(`comments.php?action=get&article_url=${encodeURIComponent(currentArticleUrl)}`)
+        // Load comments with pagination
+        function loadComments(page = 1) {
+            currentPage = page;
+            fetch(`comments.php?action=get&article_url=${encodeURIComponent(currentArticleUrl)}&page=${page}`)
                 .then(response => response.json())
                 .then(data => {
                     const container = document.getElementById('commentsContainer');
                     const countElement = document.getElementById('commentsCount');
+                    const paginationElement = document.getElementById('commentsPagination');
                     
                     if (data.success && data.comments.length > 0) {
-                        countElement.textContent = `${data.comments.length} comment${data.comments.length > 1 ? 's' : ''}`;
+                        const total = data.pagination.total_comments;
+                        countElement.textContent = `${total} comment${total > 1 ? 's' : ''}`;
                         
                         container.innerHTML = data.comments.map(comment => `
                             <div class="comment">
@@ -697,14 +773,53 @@
                                 </div>
                             </div>
                         `).join('');
+                        
+                        // Show pagination if more than 10 comments
+                        if (data.pagination.total_pages > 1) {
+                            totalPages = data.pagination.total_pages;
+                            renderPagination(data.pagination);
+                            paginationElement.style.display = 'flex';
+                        } else {
+                            paginationElement.style.display = 'none';
+                        }
                     } else {
                         countElement.textContent = '0 comments';
                         container.innerHTML = '<div class="no-comments">No comments yet. Be the first to share your thoughts!</div>';
+                        paginationElement.style.display = 'none';
                     }
                 })
                 .catch(error => {
                     console.error('Error loading comments:', error);
                 });
+        }
+        
+        // Render pagination controls
+        function renderPagination(pagination) {
+            const infoElement = document.getElementById('paginationInfo');
+            const controlsElement = document.getElementById('paginationControls');
+            
+            const start = ((pagination.current_page - 1) * pagination.per_page) + 1;
+            const end = Math.min(pagination.current_page * pagination.per_page, pagination.total_comments);
+            
+            infoElement.textContent = `${start}-${end} of ${pagination.total_comments}`;
+            
+            let controls = '';
+            
+            // Previous button
+            controls += `<button class="pagination-btn" ${pagination.current_page === 1 ? 'disabled' : ''} onclick="loadComments(${pagination.current_page - 1})">‹ Prev</button>`;
+            
+            // Page numbers
+            const startPage = Math.max(1, pagination.current_page - 2);
+            const endPage = Math.min(pagination.total_pages, pagination.current_page + 2);
+            
+            for (let i = startPage; i <= endPage; i++) {
+                controls += `<button class="pagination-btn ${i === pagination.current_page ? 'active' : ''}" onclick="loadComments(${i})">${i}</button>`;
+            }
+            
+            // Next button
+            controls += `<button class="pagination-btn" ${pagination.current_page === pagination.total_pages ? 'disabled' : ''} onclick="loadComments(${pagination.current_page + 1})">Next ›</button>`;
+            
+            controlsElement.innerHTML = controls;
         }
     </script>
 </body>

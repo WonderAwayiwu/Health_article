@@ -44,14 +44,25 @@ function getComments() {
     global $sql;
     
     $article_url = $_GET['article_url'] ?? '';
+    $page = max(1, intval($_GET['page'] ?? 1));
+    $limit = 10;
+    $offset = ($page - 1) * $limit;
     
     if (empty($article_url)) {
         echo json_encode(['success' => false, 'message' => 'Article URL required']);
         return;
     }
     
-    $stmt = $sql->prepare("SELECT user_name, comment_text, created_at FROM comments WHERE article_url = ? ORDER BY created_at DESC");
-    $stmt->bind_param("s", $article_url);
+    // Get total count
+    $countStmt = $sql->prepare("SELECT COUNT(*) as total FROM comments WHERE article_url = ?");
+    $countStmt->bind_param("s", $article_url);
+    $countStmt->execute();
+    $totalResult = $countStmt->get_result();
+    $total = $totalResult->fetch_assoc()['total'];
+    
+    // Get paginated comments
+    $stmt = $sql->prepare("SELECT user_name, comment_text, created_at FROM comments WHERE article_url = ? ORDER BY created_at DESC LIMIT ? OFFSET ?");
+    $stmt->bind_param("sii", $article_url, $limit, $offset);
     $stmt->execute();
     $result = $stmt->get_result();
     
@@ -60,6 +71,17 @@ function getComments() {
         $comments[] = $row;
     }
     
-    echo json_encode(['success' => true, 'comments' => $comments]);
+    $totalPages = ceil($total / $limit);
+    
+    echo json_encode([
+        'success' => true, 
+        'comments' => $comments,
+        'pagination' => [
+            'current_page' => $page,
+            'total_pages' => $totalPages,
+            'total_comments' => $total,
+            'per_page' => $limit
+        ]
+    ]);
 }
 ?>

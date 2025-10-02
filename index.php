@@ -27,6 +27,9 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HealthHub - Your Wellness Journey</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -35,117 +38,224 @@ try {
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #fafbfc;
-            color: #1a1a1a;
+            color: #1e293b;
             line-height: 1.6;
+            font-weight: 500;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* Header */
- /* Header */
-.header {
-  background: linear-gradient(135deg, #16a34a, #10b981, #22d3ee);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 12px 0;
-}
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-.nav-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-}
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-/* Logo */
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.logo-text {
-  font-size: 20px;
-  font-weight: 700;
-  color: white;
-}
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo img {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            letter-spacing: -0.5px;
+        }
 
-/* Nav Links */
-.nav-links {
-  display: flex;
-  gap: 28px;
-}
-.nav-link {
-  color: rgba(255, 255, 255, 0.9);
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s;
-  padding: 6px 12px;
-  border-radius: 8px;
-}
-.nav-link:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.15);
-}
+        /* Nav Links */
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-1px);
+        }
+        
+        .nav-link:active {
+            transform: translateY(0);
+        }
 
-/* Search */
-.search-container {
-  position: relative;
-  width: 300px;
-}
-.search-input {
-  width: 100%;
-  padding: 10px 16px 10px 40px;
-  border: none;
-  border-radius: 25px;
-  background: rgba(255, 255, 255, 0.9);
-  font-size: 14px;
-  outline: none;
-}
-.search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #16a34a;
-}
+        /* Search */
+        .search-container {
+            position: relative;
+            width: 380px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 14px 20px 14px 48px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            font-size: 15px;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .search-input:focus {
+            border-color: #3b82f6;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+        
+        .search-input::placeholder {
+            color: #64748b;
+            font-weight: 500;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-icon svg {
+            width: 100%;
+            height: 100%;
+            fill: #64748b;
+            transition: fill 0.3s ease;
+        }
+        
+        .search-icon:hover svg {
+            fill: #3b82f6;
+        }
 
-/* User */
-.user-section {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.username-display {
-  color: white;
-  font-size: 14px;
-  font-weight: 500;
-}
-.user-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: white;
-  color: #16a34a;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.logout-btn {
-  background: white;
-  color: #16a34a;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.3s;
-}
-.logout-btn:hover {
-  background: #f0fdf4;
-}
+        .search-suggestions {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: none;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+        
+        .search-suggestion {
+            padding: 14px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f5f9;
+            transition: all 0.2s ease;
+            font-size: 15px;
+            font-weight: 500;
+            color: #334155;
+        }
+        
+        .search-suggestion:hover {
+            background: #f8fafc;
+            color: #1e293b;
+        }
+        
+        .search-suggestion:last-child {
+            border-bottom: none;
+        }
+
+        /* User Section */
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .username-display {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .user-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .user-avatar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.12);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
 
 
         /* Hero Section */
@@ -289,7 +399,8 @@ try {
             position: relative;
             overflow: hidden;
             background-size: cover;
-            background-position: center;
+            background-position: center center;
+            background-repeat: no-repeat;
         }
 
         .featured-image::before {
@@ -1048,8 +1159,13 @@ try {
                 <a href="view_all_comments.php" class="nav-link">Comments</a>
             </nav>
             <div class="search-container">
-                <span class="search-icon">🔍</span>
-                <input type="text" class="search-input" placeholder="Search health articles..." id="searchInput">
+                <div class="search-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <input type="text" class="search-input" placeholder="Search health articles, conditions, treatments..." id="searchInput">
+                <div class="search-suggestions" id="searchSuggestions"></div>
             </div>
             <div class="user-section">
                 <span class="username-display">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
@@ -1447,28 +1563,114 @@ try {
             if (e.key === 'Enter') {
                 const query = this.value.trim();
                 if (query) {
-                    searchArticles(query);
+                    performSearch(query);
                 }
             }
         });
+        
+        // Add search icon click functionality
+        document.querySelector('.search-icon').addEventListener('click', function() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (query) {
+                performSearch(query);
+            }
+        });
+        
+        // Add search suggestions
+        const searchSuggestions = [
+            'heart disease', 'diabetes', 'cancer prevention', 'mental health',
+            'nutrition tips', 'exercise benefits', 'weight loss', 'sleep disorders',
+            'blood pressure', 'cholesterol', 'immune system', 'stress management',
+            'healthy diet', 'vitamins', 'meditation', 'yoga benefits'
+        ];
+        
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const query = this.value.trim().toLowerCase();
+            const suggestions = document.getElementById('searchSuggestions');
+            
+            if (query.length > 1) {
+                const matches = searchSuggestions.filter(s => s.toLowerCase().includes(query));
+                if (matches.length > 0) {
+                    suggestions.innerHTML = matches.slice(0, 5).map(match => 
+                        `<div class="search-suggestion" onclick="selectSuggestion('${match}')">${match}</div>`
+                    ).join('');
+                    suggestions.style.display = 'block';
+                } else {
+                    suggestions.style.display = 'none';
+                }
+            } else {
+                suggestions.style.display = 'none';
+            }
+        });
+        
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                document.getElementById('searchSuggestions').style.display = 'none';
+            }
+        });
+        
+        function selectSuggestion(suggestion) {
+            document.getElementById('searchInput').value = suggestion;
+            document.getElementById('searchSuggestions').style.display = 'none';
+            performSearch(suggestion);
+        }
 
-        // Search articles
-        function searchArticles(query) {
+        // Perform search function
+        function performSearch(query) {
+            // Scroll to articles section
+            document.querySelector('#articles').scrollIntoView({ behavior: 'smooth' });
+            
+            // Update section title
+            document.querySelector('#articles .section-title').textContent = `Search Results for "${query}"`;
+            
+            // Show loading
             const articlesGrid = document.getElementById('articlesGrid');
             articlesGrid.innerHTML = '<div class="loading">Searching articles...</div>';
 
-            fetch(`simple_gnews.php?action=search&q=${encodeURIComponent(query)}&max=6`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success && data.articles.length > 0) {
-                        displayArticles(data.articles);
+            // Search with multiple strategies
+            const searchPromises = [
+                fetch(`simple_gnews.php?action=search&q=${encodeURIComponent(query + ' health')}&max=20`),
+                fetch(`simple_gnews.php?action=search&q=${encodeURIComponent(query + ' medical')}&max=20`),
+                fetch(`simple_gnews.php?action=search&q=${encodeURIComponent(query)}&max=20`)
+            ];
+            
+            Promise.all(searchPromises)
+                .then(responses => Promise.all(responses.map(r => r.json())))
+                .then(results => {
+                    let allArticles = [];
+                    results.forEach(data => {
+                        if (data.success && data.articles) {
+                            allArticles = allArticles.concat(data.articles);
+                        }
+                    });
+                    
+                    // Remove duplicates based on URL
+                    const uniqueArticles = allArticles.filter((article, index, self) => 
+                        index === self.findIndex(a => a.url === article.url)
+                    );
+                    
+                    if (uniqueArticles.length > 0) {
+                        displayArticles(uniqueArticles.slice(0, 24)); // Show max 24 results
                     } else {
-                        articlesGrid.innerHTML = '<div class="loading">No articles found for your search.</div>';
+                        articlesGrid.innerHTML = `
+                            <div class="loading">
+                                <h3>No articles found for "${query}"</h3>
+                                <p>Try searching for:</p>
+                                <ul style="text-align: left; margin: 20px 0;">
+                                    <li>• Health conditions (diabetes, heart disease, cancer)</li>
+                                    <li>• Body parts (brain, heart, lungs, liver)</li>
+                                    <li>• Treatments (medicine, surgery, therapy)</li>
+                                    <li>• Lifestyle topics (diet, exercise, sleep)</li>
+                                    <li>• General terms (nutrition, fitness, wellness)</li>
+                                </ul>
+                            </div>
+                        `;
                     }
                 })
                 .catch(error => {
                     console.error('Search error:', error);
-                    articlesGrid.innerHTML = '<div class="loading">Error searching articles.</div>';
+                    articlesGrid.innerHTML = '<div class="loading">Error searching articles. Please try again.</div>';
                 });
         }
 
